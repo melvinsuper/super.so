@@ -158,10 +158,11 @@ small,
 /* Performance: paint heavy gradient once on html/body */
 html,
 body {
+  body {
   background:
-    radial-gradient(1200px 720px at 8% -12%, rgba(255, 255, 255, 0.72) 0%, transparent 56%),
-    radial-gradient(980px 640px at 100% 0%, rgba(238, 228, 196, 0.45) 0%, transparent 54%),
-    linear-gradient(135deg, #FFFDF2 0%, #F8F2DE 48%, #EFE5CC 100%) !important;
+    radial-gradient(1200px 720px at 8% -12%, rgba(255, 255, 255, 0.70) 0%, transparent 56%),
+    radial-gradient(980px 640px at 100% 0%, rgba(230, 221, 211, 0.38) 0%, transparent 54%),
+    linear-gradient(135deg, #FBF8F3 0%, #F5F2EB 52%, #EFE7DC 100%) !important;
 }
 
 /* Keep wrappers transparent so gradient is visible and not re-painted repeatedly */
@@ -174,6 +175,7 @@ body {
 .notion-page-content-inner {
   background: transparent !important;
 }
+
 
 
 /*****************Navbar***************/
