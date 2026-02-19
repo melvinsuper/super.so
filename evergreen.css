@@ -1,0 +1,892 @@
+/* Hidden blocks */
+.notion-toggle.bg-brown {
+  display: none !important;
+}
+/* End of the hidden blocks */
+/* PREMIUM THEME BACKGROUND (Dim Grey base + controlled Yellow-Green + soft White lighting) */
+body {
+  background-color: #6E6E6E !important;
+
+  background-image:
+    /* Soft white spotlight behind the hero area (premium lift) */
+    radial-gradient(1100px 720px at 50% 8%,
+      rgba(255, 255, 255, 0.16) 0%,
+      rgba(255, 255, 255, 0.00) 60%),
+
+    /* Yellow-green sheen (top-right, subtle and controlled) */
+    radial-gradient(900px 650px at 92% 6%,
+      rgba(186, 255, 57, 0.14) 0%,
+      rgba(186, 255, 57, 0.00) 55%),
+
+    /* Secondary faint tint (bottom-left, balances the composition) */
+    radial-gradient(900px 700px at 10% 95%,
+      rgba(186, 255, 57, 0.07) 0%,
+      rgba(186, 255, 57, 0.00) 58%),
+
+    /* Edge vignette (adds depth + “premium” focus) */
+    radial-gradient(1400px 1000px at 50% 50%,
+      rgba(0, 0, 0, 0.00) 62%,
+      rgba(0, 0, 0, 0.26) 100%),
+
+    /* Dim grey foundation */
+  linear-gradient(180deg, #727272 0%, #5F5F5F 55%, #4F4F4F 100%) !important;
+
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Keep wrappers transparent so the gradient shows through (Super/Notion) */
+.super-root,
+.super-content,
+.notion-page,
+.notion-page-content,
+.notion-frame,
+.notion-scroller,
+.notion-page-content-inner {
+  background: transparent !important;
+}
+
+/* Mobile-friendly: avoids “fixed background” jank on some phones */
+@media (max-width: 768px) {
+  body { background-attachment: scroll; }
+}
+
+/* DARKER / MORE “LUXURY” CALLOUT BACKGROUND (same selector) */
+.notion-callout.bg-brown-light {
+  position: relative !important;
+  isolation: isolate;
+  overflow: hidden !important;
+  background: transparent !important;
+
+  border-radius: 18px !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.32) !important;
+
+  color: #FFFFFF !important;
+}
+
+/* Darker dim-grey foundation over the image (improves contrast) */
+.notion-callout.bg-brown-light::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  background:
+    linear-gradient(180deg,
+      rgba(110, 110, 110, 0.52) 0%,
+      rgba(34, 34, 34, 0.78) 55%,
+      rgba(18, 18, 18, 0.88) 100%),
+    url("https://i.imgur.com/wu5vEdg.png") center / cover no-repeat;
+
+  filter: saturate(0.92) contrast(1.10) brightness(0.92);
+  transform: scale(1.04);
+  pointer-events: none;
+}
+
+/* Premium lighting + controlled Yellow-Green accent (kept subtle) */
+.notion-callout.bg-brown-light::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  background:
+    radial-gradient(900px 640px at 18% -12%,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.00) 60%),
+    radial-gradient(900px 650px at 92% 10%,
+      rgba(186, 255, 57, 0.14) 0%,
+      rgba(186, 255, 57, 0.00) 55%),
+    radial-gradient(1200px 900px at 50% 60%,
+      rgba(0, 0, 0, 0.00) 55%,
+      rgba(0, 0, 0, 0.30) 100%);
+
+  pointer-events: none;
+}
+
+/* Keep the callout content above overlays */
+.notion-callout.bg-brown-light > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Accent links (theme-consistent) */
+.notion-callout.bg-brown-light a {
+  color: #BAFF39 !important;
+}
+
+/* Mobile: reduce heavy shadow slightly (cleaner, less “muddy”) */
+@media (max-width: 768px) {
+  .notion-callout.bg-brown-light {
+    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.28) !important;
+  }
+}
+
+
+/***********Callout gray****************?
+
+/* MAIN CALLOUT (container) — more premium neutral, less green */
+.notion-callout.bg-gray-light.border {
+  position: relative !important;
+  isolation: isolate;
+  overflow: hidden !important;
+  background: transparent !important;
+
+  border-radius: 18px !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28) !important;
+
+  color: #FFFFFF !important;
+}
+
+/* Background image (contained in callout) — toned down so it doesn’t tint green */
+.notion-callout.bg-gray-light.border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  background: url("https://i.imgur.com/PX7MIC7.png") center / cover no-repeat;
+
+  /* More neutral grading (less green influence) */
+  filter: blur(10px) saturate(0.85) contrast(1.08) brightness(0.82);
+  transform: scale(1.08);
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* Overlays — shift to graphite + subtle accent only */
+.notion-callout.bg-gray-light.border::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  background:
+    /* Graphite wash (dominant) */
+    linear-gradient(180deg,
+      rgba(36, 41, 36, 0.62) 0%,     /* #242924-ish */
+      rgba(22, 22, 22, 0.74) 55%,
+      rgba(10, 10, 10, 0.82) 100%),
+
+    /* Very subtle Yellow-Green accent (reduced) */
+    radial-gradient(900px 650px at 92% 12%,
+      rgba(186, 255, 57, 0.08) 0%,
+      rgba(186, 255, 57, 0.00) 55%),
+
+    /* Soft white lift (reduced) */
+    radial-gradient(900px 600px at 18% -10%,
+      rgba(255, 255, 255, 0.09) 0%,
+      rgba(255, 255, 255, 0.00) 60%),
+
+    /* Vignette for depth */
+    radial-gradient(1200px 900px at 50% 60%,
+      rgba(0, 0, 0, 0.00) 52%,
+      rgba(0, 0, 0, 0.42) 100%);
+
+  pointer-events: none;
+}
+
+/* Keep the callout content above overlays */
+.notion-callout.bg-gray-light.border > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Accent links (theme-consistent, but not overpowering) */
+.notion-callout.bg-gray-light.border a {
+  color: #BAFF39 !important;
+}
+
+/* Mobile: reduce blur for performance */
+@media (max-width: 768px) {
+  .notion-callout.bg-gray-light.border::before {
+    filter: blur(7px) saturate(0.82) contrast(1.06) brightness(0.86);
+  }
+}
+
+
+/* HERO H1 (two-column layout friendly) */
+/* Premium hero H1 refinement (global H1) */
+h1.notion-heading {
+  font-size: clamp(44px, 5.2vw, 78px) !important;   /* big, but controlled */
+  line-height: 1.03 !important;                     /* tighter editorial rhythm */
+  letter-spacing: -0.02em !important;               /* premium display tweak */
+  margin: 0 0 12px 0 !important;                    /* cleaner spacing in columns */
+  text-wrap: balance;                               /* nicer line breaks (supported in modern browsers) */
+  color: rgba(255,255,255,0.96) !important;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.20);        /* subtle depth, not “glowy” */
+}
+
+
+/****************List*********************/
+
+/* --------------------------------------------
+   PREMIUM COLUMN LIST (GLOBAL)
+   EXCEPT: do NOT apply inside .notion-callout
+--------------------------------------------- */
+
+/* --------------------------------------------
+   PREMIUM COLUMN LIST (GLOBAL)
+   EXCEPT: do NOT apply inside .notion-callout
+--------------------------------------------- */
+
+/* Fallback (older browsers): top-level only, no center line */
+.notion-page-content > .notion-column-list {
+  width: 100% !important;
+  max-width: 1120px !important;
+  margin: 0 auto !important;
+
+  display: flex !important;
+  gap: 56px !important;
+  align-items: flex-start !important;
+
+  padding: 18px 0 !important;
+  position: relative !important;
+}
+
+.notion-page-content > .notion-column-list > .notion-column {
+  min-width: 0 !important;
+  flex: 1 1 0 !important;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .notion-page-content > .notion-column-list {
+    max-width: 980px !important;
+    gap: 40px !important;
+  }
+}
+
+/* Mobile: stack */
+@media (max-width: 768px) {
+  .notion-page-content > .notion-column-list {
+    flex-direction: column !important;
+    gap: 26px !important;
+    padding: 14px 0 !important;
+  }
+}
+
+/* Modern browsers: apply to ALL column lists, but exclude those inside callouts */
+@supports selector(.notion-column-list:not(.notion-callout .notion-column-list)) {
+  .notion-column-list:not(.notion-callout .notion-column-list) {
+    width: 100% !important;
+    max-width: 1120px !important;
+    margin: 0 auto !important;
+
+    display: flex !important;
+    gap: 56px !important;
+    align-items: flex-start !important;
+
+    padding: 18px 0 !important;
+    position: relative !important;
+  }
+
+  .notion-column-list:not(.notion-callout .notion-column-list) > .notion-column {
+    min-width: 0 !important;
+    flex: 1 1 0 !important;
+  }
+
+  /* Centered vertical divider ONLY for exactly 2 columns */
+  @supports selector(.notion-column-list:has(> .notion-column:nth-child(2))) {
+    .notion-column-list:not(.notion-callout .notion-column-list)
+      :has(> .notion-column:nth-child(2)):not(:has(> .notion-column:nth-child(3)))::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      transform: translateX(-0.5px);
+      background: rgba(255, 255, 255, 0.10);
+      pointer-events: none;
+    }
+  }
+
+  /* Tablet */
+  @media (max-width: 1024px) {
+    .notion-column-list:not(.notion-callout .notion-column-list) {
+      max-width: 980px !important;
+      gap: 40px !important;
+    }
+  }
+
+  /* Mobile: stack + remove center divider */
+  @media (max-width: 768px) {
+    .notion-column-list:not(.notion-callout .notion-column-list) {
+      flex-direction: column !important;
+      gap: 26px !important;
+      padding: 14px 0 !important;
+    }
+
+    .notion-column-list:not(.notion-callout .notion-column-list)::after {
+      content: none !important;
+    }
+  }
+}
+
+/************Light gray buttons**************/
+
+/* SECONDARY CTA (cards) — premium outline by default, lime fill on hover */
+.notion-button__content.bg-gray-light{
+  border-radius: 14px !important;
+  padding: 12px 18px !important;
+
+  background: rgba(0, 0, 0, 0.22) !important; /* restrained */
+  border: 1px solid rgba(186, 255, 57, 0.32) !important;
+  color: #BAFF39 !important;
+
+  box-shadow: 0 10px 22px rgba(0,0,0,0.22) !important;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease, border-color .18s ease !important;
+}
+
+/* Hover state (works even if the hover is on the button wrapper) */
+.notion-button:hover .notion-button__content.bg-gray-light,
+.notion-button__content.bg-gray-light:hover{
+  background: rgba(186, 255, 57, 0.92) !important; /* “wow” moment */
+  border-color: rgba(186, 255, 57, 0.95) !important;
+  color: #101010 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 16px 34px rgba(0,0,0,0.28) !important;
+}
+
+/* PRIMARY CTA (hero) — solid but slightly toned so it doesn’t look “neon” */
+.notion-button__content.bg-brown-light{
+  border-radius: 14px !important;
+  padding: 12px 20px !important;
+
+  background: rgba(186, 255, 57, 0.88) !important; /* slightly toned */
+  border: 1px solid rgba(255,255,255,0.14) !important;
+  color: #101010 !important;
+
+  box-shadow: 0 14px 30px rgba(0,0,0,0.25) !important;
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease !important;
+}
+
+.notion-button:hover .notion-button__content.bg-brown-light,
+.notion-button__content.bg-brown-light:hover{
+  filter: brightness(0.96) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.30) !important;
+}
+
+/* Keyboard focus (premium + accessible) */
+.notion-button:focus-within .notion-button__content.bg-gray-light,
+.notion-button:focus-within .notion-button__content.bg-brown-light{
+  outline: 2px solid rgba(186, 255, 57, 0.45) !important;
+  outline-offset: 2px !important;
+}
+
+/* ========= Medium Gallery: *****************/
+/* =========================================================
+   Medium Gallery — Premium Holographic Hover (fixed + stronger)
+   Target: .notion-collection-gallery.medium
+   ========================================================= */
+
+/* Card base (keep your layout; just ensure proper clipping + premium surface) */
+.notion-collection-gallery.medium .notion-collection-card,
+.notion-collection-gallery.medium a.notion-collection-card{
+  position: relative !important;
+  overflow: hidden !important;              /* IMPORTANT: prevents the “vertical bar/spill” */
+  isolation: isolate;                       /* keeps blends contained */
+  border-radius: 24px !important;           /* premium rounded corners */
+  border: 1px solid rgba(255,255,255,0.10) !important;
+  background: rgba(10, 14, 18, 0.78) !important;
+  box-shadow:
+    0 14px 34px rgba(0,0,0,0.35),
+    0 1px 0 rgba(255,255,255,0.05) inset !important;
+
+  transform: translateZ(0);
+  transition:
+    transform 0.45s ease,
+    box-shadow 0.45s ease,
+    border-color 0.45s ease;
+}
+
+/* Keep all real content above overlays */
+.notion-collection-gallery.medium .notion-collection-card > *,
+.notion-collection-gallery.medium a.notion-collection-card > *{
+  position: relative;
+  z-index: 2;
+}
+
+/* Cover polish */
+.notion-collection-gallery.medium .notion-collection-card__cover{
+  overflow: hidden !important;
+  border-radius: 24px 24px 18px 18px !important;
+  transform: translateZ(0);
+  transition: transform 0.45s ease, filter 0.45s ease;
+}
+
+/* Ensure cover media behaves correctly */
+.notion-collection-gallery.medium .notion-collection-card__cover img,
+.notion-collection-gallery.medium .notion-collection-card__cover video{
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transition: transform 0.45s ease, filter 0.45s ease;
+}
+
+/* Text area: remove “white block” look and keep your font (no font-family changes) */
+.notion-collection-gallery.medium .notion-collection-card__content{
+  background: rgba(7, 10, 12, 0.78) !important;
+  border-top: 1px solid rgba(255,255,255,0.08) !important;
+  padding: 14px 16px 16px !important;
+  border-radius: 0 0 24px 24px !important;
+}
+
+/* Keep text readable (still aligns with your dark premium look) */
+.notion-collection-gallery.medium .notion-property__title,
+.notion-collection-gallery.medium .notion-property__title *{
+  color: rgba(255,255,255,0.92) !important;
+}
+
+.notion-collection-gallery.medium .notion-property__rich_text,
+.notion-collection-gallery.medium .notion-property__rich_text *{
+  color: rgba(255,255,255,0.72) !important;
+}
+
+/* ---------- Holographic layers (stronger + controlled) ---------- */
+
+/* Sweep layer */
+.notion-collection-gallery.medium .notion-collection-card::before,
+.notion-collection-gallery.medium a.notion-collection-card::before{
+  content: "";
+  position: absolute;
+  inset: -70% !important;                   /* large enough for sweep */
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;                   /* IMPORTANT: keeps rounded clipping clean */
+
+  /* stronger holographic sheen (still premium) */
+  background: linear-gradient(
+    110deg,
+    rgba(255,255,255,0) 0%,
+    rgba(120, 255, 214, 0.14) 35%,
+    rgba(160, 140, 255, 0.14) 50%,
+    rgba(92, 198, 255, 0.16) 65%,
+    rgba(255,255,255,0) 100%
+  );
+
+  mix-blend-mode: screen;                   /* makes it visible on dark images */
+  opacity: 0;
+  transform: rotate(-25deg) translate3d(-20%, -10%, 0);
+  transition: transform 0.55s ease, opacity 0.55s ease;
+}
+
+/* Soft aura */
+.notion-collection-gallery.medium .notion-collection-card::after,
+.notion-collection-gallery.medium a.notion-collection-card::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+
+  background: radial-gradient(
+    120% 90% at 50% 100%,
+    rgba(120, 255, 214, 0.12) 0%,
+    rgba(160, 140, 255, 0.08) 35%,
+    rgba(0, 0, 0, 0) 70%
+  );
+}
+
+/* Hover / focus */
+.notion-collection-gallery.medium .notion-collection-card:hover,
+.notion-collection-gallery.medium .notion-collection-card:focus-within,
+.notion-collection-gallery.medium a.notion-collection-card:hover,
+.notion-collection-gallery.medium a.notion-collection-card:focus-within{
+  transform: translateY(-3px) scale(1.02);
+  border-color: rgba(255,255,255,0.16) !important;
+  box-shadow:
+    0 22px 52px rgba(0,0,0,0.45),
+    0 0 0 1px rgba(120, 255, 214, 0.08),
+    0 1px 0 rgba(255,255,255,0.06) inset !important;
+}
+
+.notion-collection-gallery.medium .notion-collection-card:hover::before,
+.notion-collection-gallery.medium .notion-collection-card:focus-within::before,
+.notion-collection-gallery.medium a.notion-collection-card:hover::before,
+.notion-collection-gallery.medium a.notion-collection-card:focus-within::before{
+  opacity: 1;
+  transform: rotate(-25deg) translate3d(25%, 35%, 0); /* visible sweep */
+}
+
+.notion-collection-gallery.medium .notion-collection-card:hover::after,
+.notion-collection-gallery.medium .notion-collection-card:focus-within::after,
+.notion-collection-gallery.medium a.notion-collection-card:hover::after,
+.notion-collection-gallery.medium a.notion-collection-card:focus-within::after{
+  opacity: 1;
+}
+
+/* Image polish on hover (avoid “ugly/washed” look) */
+.notion-collection-gallery.medium .notion-collection-card:hover .notion-collection-card__cover,
+.notion-collection-gallery.medium .notion-collection-card:focus-within .notion-collection-card__cover,
+.notion-collection-gallery.medium a.notion-collection-card:hover .notion-collection-card__cover,
+.notion-collection-gallery.medium a.notion-collection-card:focus-within .notion-collection-card__cover{
+  filter: saturate(1.06) contrast(1.04) brightness(1.02);
+}
+
+.notion-collection-gallery.medium .notion-collection-card:hover .notion-collection-card__cover img,
+.notion-collection-gallery.medium .notion-collection-card:focus-within .notion-collection-card__cover img,
+.notion-collection-gallery.medium a.notion-collection-card:hover .notion-collection-card__cover img,
+.notion-collection-gallery.medium a.notion-collection-card:focus-within .notion-collection-card__cover img{
+  transform: scale(1.03);
+}
+
+/* Mobile: reduce intensity so it doesn’t feel jumpy */
+@media (max-width: 768px){
+  .notion-collection-gallery.medium .notion-collection-card:hover,
+  .notion-collection-gallery.medium .notion-collection-card:focus-within,
+  .notion-collection-gallery.medium a.notion-collection-card:hover,
+  .notion-collection-gallery.medium a.notion-collection-card:focus-within{
+    transform: translateY(-2px) scale(1.01);
+  }
+
+  .notion-collection-gallery.medium .notion-collection-card:hover::before,
+  .notion-collection-gallery.medium .notion-collection-card:focus-within::before,
+  .notion-collection-gallery.medium a.notion-collection-card:hover::before,
+  .notion-collection-gallery.medium a.notion-collection-card:focus-within::before{
+    opacity: 0.9;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce){
+  .notion-collection-gallery.medium .notion-collection-card,
+  .notion-collection-gallery.medium .notion-collection-card::before,
+  .notion-collection-gallery.medium .notion-collection-card::after,
+  .notion-collection-gallery.medium .notion-collection-card__cover,
+  .notion-collection-gallery.medium .notion-collection-card__cover img{
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* ===== Gallery container callout (bg-green-light) — premium dark glass ===== */
+.notion-callout.bg-green-light,
+.notion-callout.bg-green-light .notion-callout__content {
+  /* cohesive with your dark/green theme */
+  background:
+    radial-gradient(1200px 520px at 18% 0%,
+      rgba(120, 255, 170, 0.12) 0%,
+      rgba(0, 0, 0, 0) 58%),
+    radial-gradient(900px 520px at 100% 0%,
+      rgba(60, 210, 140, 0.10) 0%,
+      rgba(0, 0, 0, 0) 55%),
+    linear-gradient(180deg,
+      rgba(10, 12, 12, 0.86) 0%,
+      rgba(6, 8, 8, 0.92) 100%) !important;
+
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  border-radius: 28px !important;
+
+  box-shadow:
+    0 22px 60px rgba(0, 0, 0, 0.42),
+    0 1px 0 rgba(255, 255, 255, 0.06) inset !important;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  /* important: prevents the gallery hover/scale from being clipped */
+  overflow: visible !important;
+}
+
+/* Keep typography “default” but ensure premium contrast */
+.notion-callout.bg-green-light {
+  color: rgba(255, 255, 255, 0.86) !important;
+}
+.notion-callout.bg-green-light h1,
+.notion-callout.bg-green-light h2,
+.notion-callout.bg-green-light h3 {
+  color: #fff !important;
+}
+
+/* Optional: soften the callout icon so it doesn’t look “blocky” */
+.notion-callout.bg-green-light .notion-callout__icon {
+  opacity: 0.9;
+  filter: saturate(0.95);
+}
+
+/* Spacing polish (keeps layout premium) */
+.notion-callout.bg-green-light .notion-callout__content {
+  padding: 28px !important;
+}
+
+/* Mobile: slightly tighter radius/padding */
+@media (max-width: 768px) {
+  .notion-callout.bg-green-light,
+  .notion-callout.bg-green-light .notion-callout__content {
+    border-radius: 22px !important;
+  }
+  .notion-callout.bg-green-light .notion-callout__content {
+    padding: 18px !important;
+  }
+}
+
+
+/* =========================
+   Premium Form (matches dark + green theme)
+   Target: .notion-form__wrapper
+   ========================= */
+
+.notion-form__wrapper{
+  width: min(960px, 100%) !important;
+  margin: 0 auto !important;
+
+  /* Glass panel that matches your section */
+  background:
+    radial-gradient(1200px 520px at 18% 0%,
+      rgba(120, 255, 170, 0.12) 0%,
+      rgba(0, 0, 0, 0) 58%),
+    radial-gradient(900px 520px at 100% 0%,
+      rgba(60, 210, 140, 0.10) 0%,
+      rgba(0, 0, 0, 0) 55%),
+    linear-gradient(180deg,
+      rgba(10, 12, 12, 0.68) 0%,
+      rgba(6, 8, 8, 0.78) 100%) !important;
+
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  border-radius: 28px !important;
+
+  box-shadow:
+    0 22px 60px rgba(0,0,0,0.42),
+    0 1px 0 rgba(255,255,255,0.06) inset !important;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  padding: 44px 44px 36px !important;
+}
+
+/* Headings inside the form (keep font; improve contrast) */
+.notion-form__wrapper h1,
+.notion-form__wrapper h2,
+.notion-form__wrapper h3{
+  color: rgba(255,255,255,0.96) !important;
+}
+
+/* Labels / helper text */
+.notion-form__wrapper label,
+.notion-form__wrapper .notion-form__label,
+.notion-form__wrapper .notion-form__description{
+  color: rgba(255,255,255,0.86) !important;
+}
+
+/* Inputs + textarea (works even if internal class names differ) */
+.notion-form__wrapper input[type="text"],
+.notion-form__wrapper input[type="email"],
+.notion-form__wrapper input[type="url"],
+.notion-form__wrapper input[type="tel"],
+.notion-form__wrapper input[type="number"],
+.notion-form__wrapper textarea,
+.notion-form__wrapper .notion-form__input,
+.notion-form__wrapper .notion-form__textarea{
+  width: 100%;
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,255,255,0.14) !important;
+  border-radius: 14px !important;
+
+  color: rgba(255,255,255,0.92) !important;
+
+  padding: 14px 16px !important;
+  min-height: 48px;
+
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.05) inset !important;
+
+  transition: border-color .22s ease, box-shadow .22s ease, background .22s ease;
+}
+
+/* Textarea sizing */
+.notion-form__wrapper textarea,
+.notion-form__wrapper .notion-form__textarea{
+  min-height: 120px !important;
+  resize: vertical;
+}
+
+/* Placeholder */
+.notion-form__wrapper input::placeholder,
+.notion-form__wrapper textarea::placeholder{
+  color: rgba(255,255,255,0.38) !important;
+}
+
+/* Focus ring (premium green glow) */
+.notion-form__wrapper input:focus,
+.notion-form__wrapper textarea:focus,
+.notion-form__wrapper .notion-form__input:focus,
+.notion-form__wrapper .notion-form__textarea:focus{
+  outline: none !important;
+  background: rgba(255,255,255,0.075) !important;
+  border-color: rgba(150, 255, 200, 0.50) !important;
+  box-shadow:
+    0 0 0 4px rgba(120, 255, 170, 0.14),
+    0 1px 0 rgba(255,255,255,0.06) inset !important;
+}
+
+/* Autofill (Chrome) */
+.notion-form__wrapper input:-webkit-autofill{
+  -webkit-text-fill-color: rgba(255,255,255,0.92) !important;
+  transition: background-color 9999s ease-in-out 0s;
+  box-shadow: 0 0 0 1000px rgba(255,255,255,0.06) inset !important;
+  border: 1px solid rgba(255,255,255,0.14) !important;
+}
+
+/* Submit button (matches your neon green accent) */
+.notion-form__wrapper button,
+.notion-form__wrapper .notion-form__submit,
+.notion-form__wrapper input[type="submit"]{
+  appearance: none;
+  border: 1px solid rgba(190, 255, 120, 0.35) !important;
+  background: rgba(184, 255, 84, 0.92) !important; /* neon green */
+  color: rgba(10, 14, 10, 0.96) !important;
+
+  border-radius: 14px !important;
+  padding: 12px 18px !important;
+  min-height: 34px;
+  font-weight: 650 !important;
+  letter-spacing: 0.01em;
+
+  box-shadow:
+    0 16px 36px rgba(0,0,0,0.35),
+    0 1px 0 rgba(255,255,255,0.25) inset !important;
+
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+  cursor: pointer;
+}
+
+.notion-form__wrapper button:hover,
+.notion-form__wrapper .notion-form__submit:hover,
+.notion-form__wrapper input[type="submit"]:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.02);
+  box-shadow:
+    0 20px 44px rgba(0,0,0,0.42),
+    0 1px 0 rgba(255,255,255,0.28) inset !important;
+}
+
+.notion-form__wrapper button:active,
+.notion-form__wrapper .notion-form__submit:active,
+.notion-form__wrapper input[type="submit"]:active{
+  transform: translateY(0);
+}
+
+/* Mobile polish */
+@media (max-width: 768px){
+  .notion-form__wrapper{
+    padding: 22px 18px 18px !important;
+    border-radius: 22px !important;
+  }
+  .notion-form__wrapper button,
+  .notion-form__wrapper .notion-form__submit,
+  .notion-form__wrapper input[type="submit"]{
+    width: 100% !important;
+  }
+}
+
+
+/* ===== Mobile submit button fix (append at the end) ===== */
+@media (max-width: 768px) {
+
+  /* Covers real <button>/<input> AND Notion-style button content inside the form */
+  .notion-form__wrapper button,
+  .notion-form__wrapper input[type="submit"],
+  .notion-form__wrapper .notion-form__submit,
+  .notion-form__wrapper a.notion-form__submit,
+  .notion-form__wrapper .notion-button__content,
+  .notion-form__wrapper .notion-button__content.bg-green-light {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    /* Make it look “premium” and not oversized */
+    padding: 14px 18px !important;
+    min-height: 52px !important;
+
+    border-radius: 16px !important;
+
+    font-size: 16px !important;
+    line-height: 1.1 !important;
+    letter-spacing: 0.01em !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    /* Remove any inherited weird spacing */
+    margin: 14px 0 0 0px !important;
+  }
+
+  /* If there’s a wrapper that adds extra spacing, normalize it */
+  .notion-form__wrapper .notion-form__actions,
+  .notion-form__wrapper .notion-form__footer {
+    margin-top: 14px !important;
+  }
+}
+
+/* ===== Append: wider + shorter submit button (all views) ===== */
+.notion-form__wrapper button,
+.notion-form__wrapper input[type="submit"],
+.notion-form__wrapper .notion-form__submit,
+.notion-form__wrapper a.notion-form__submit,
+.notion-form__wrapper .notion-button__content,
+.notion-form__wrapper .notion-button__content.bg-green-light{
+  width: 35% !important;        /* increase width (full row) */
+  max-width: 100% !important;
+
+  /* decrease height */
+  padding: 10px 18px !important; /* reduce vertical padding */
+  min-height: 22px !important;   /* shorter button */
+  border-radius: 16px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Optional: keep it slightly shorter on mobile */
+@media (max-width: 768px){
+  .notion-form__wrapper button,
+  .notion-form__wrapper input[type="submit"],
+  .notion-form__wrapper .notion-form__submit,
+  .notion-form__wrapper a.notion-form__submit,
+  .notion-form__wrapper .notion-button__content,
+  .notion-form__wrapper .notion-button__content.bg-green-light{
+    padding: 10px 16px !important;
+    min-height: 20px !important;
+    
+    
+  }
+}
+
+
+/* Prevent odd spacing + keep crops clean */
+/* GLOBAL: Premium rounded images (Notion + Super) */
+.notion-image,
+.notion-image img,
+.notion-image .notion-image-wrapper,
+.notion-image .notion-image-wrapper img {
+  border-radius: 24px !important;
+  overflow: hidden !important;
+}
+
+
+
+/* Mobile: slightly tighter radius */
+@media (max-width: 768px) {
+  .notion-image,
+  .notion-image img,
+  .notion-image .notion-image-wrapper,
+  .notion-image .notion-image-wrapper img {
+    border-radius: 18px !important;
+  }
+}
+/* Prevent odd spacing + keep crops clean */
+.notion-image img,
+.notion-image .notion-image-wrapper img {
+  display: block;
+  object-fit: contain;
+}
