@@ -1,4 +1,3 @@
-<script>
 (() => {
   if (window.__superSeamlessCalloutMarquee) return;
   window.__superSeamlessCalloutMarquee = true;
@@ -178,4 +177,4 @@
   const observer = new MutationObserver(() => scan());
   observer.observe(document.body, { childList: true, subtree: true });
 })();
-</script>
+
