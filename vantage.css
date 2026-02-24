@@ -1,0 +1,2629 @@
+/* =========================================
+   OPTION 1 — Warm Ivory / Luxury Beige (Recommended)
+   Premium, calm, and perfect for leather/business style
+========================================= */
+body {
+  background:
+    radial-gradient(1200px 760px at 8% -10%, rgba(255, 255, 255, 0.92) 0%, transparent 58%),
+    radial-gradient(1000px 700px at 95% 0%, rgba(233, 216, 194, 0.38) 0%, transparent 56%),
+    radial-gradient(900px 700px at 100% 100%, rgba(35, 29, 22, 0.06) 0%, transparent 62%),
+    linear-gradient(135deg, #FAF8F4 0%, #F3EEE6 52%, #EEE5D8 100%) !important;
+}
+
+/* Make Super/Notion wrappers transparent so gradient is visible */
+.super-root,
+.super-content,
+.notion-page,
+.notion-page-content,
+.notion-page-content-inner,
+.notion-frame,
+.notion-scroller {
+  background: transparent !important;
+}
+
+
+
+
+
+/* =========================================
+   Premium FAQ Callouts (Warm Ivory / Luxury)
+   Main selector: .notion-callout.bg-orange-light
+========================================= */
+
+/* FAQ card base */
+/* =========================================
+   Premium FAQ Callouts (Warm Ivory / Luxury)
+   Selector: .notion-callout.bg-orange-light
+   Matches Option 1 background + Inter/Playfair typography
+========================================= */
+
+/* FAQ card base */
+.notion-callout.bg-orange-light {
+  position: relative !important;
+  isolation: isolate !important;
+  width: 100% !important;
+  margin: 12px 0 !important;
+  padding: 22px 24px !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+
+  /* Warm premium surface (slightly richer for better contrast vs page bg) */
+  background:
+    radial-gradient(120% 120% at 0% 0%, rgba(255, 255, 255, 0.38) 0%, transparent 58%),
+  radial-gradient(90% 120% at 100% 100%, rgba(93, 76, 58, 0.04) 0%, transparent 62%),
+  linear-gradient(180deg, #F7F3EC 0%, #F0E8DD 100%) !important;
+
+  border: 1px solid rgba(122, 90, 59, 0.14) !important;
+
+  box-shadow:
+    0 12px 28px rgba(38, 30, 22, 0.05),
+    0 1px 0 rgba(255, 255, 255, 0.65) inset !important;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease !important;
+}
+
+/* Subtle premium top sheen */
+.notion-callout.bg-orange-light::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.06) 26%,
+    rgba(255, 255, 255, 0) 55%
+  );
+  z-index: 0;
+}
+
+/* Hover polish (desktop only) */
+@media (hover: hover) {
+  .notion-callout.bg-orange-light:hover {
+    transform: translateY(-2px) !important;
+    border-color: rgba(122, 90, 59, 0.20) !important;
+    box-shadow:
+      0 16px 34px rgba(38, 30, 22, 0.07),
+      0 1px 0 rgba(255, 255, 255, 0.72) inset !important;
+  }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .notion-callout.bg-orange-light {
+    transition: none !important;
+  }
+  .notion-callout.bg-orange-light:hover {
+    transform: none !important;
+  }
+}
+
+/* Keep content above overlay */
+.notion-callout.bg-orange-light > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Optional: hide callout icon if present (cleaner FAQ layout) */
+.notion-callout.bg-orange-light .notion-callout__icon {
+  display: none !important;
+}
+
+/* Normalize content spacing */
+.notion-callout.bg-orange-light .notion-callout__content {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  color: #2A241F !important;
+}
+
+/* Two-column FAQ layout inside each callout (Question | Answer) */
+.notion-callout.bg-orange-light .notion-column-list {
+  display: grid !important;
+  grid-template-columns: minmax(220px, 0.95fr) minmax(0, 1.35fr) !important;
+  gap: 20px 28px !important;
+  align-items: start !important;
+  width: 100% !important;
+}
+
+/* Reset Notion inline column widths so grid controls layout */
+.notion-callout.bg-orange-light .notion-column-list > .notion-column {
+  width: auto !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+}
+
+/* Left column (Question) */
+.notion-callout.bg-orange-light .notion-column-list > .notion-column:first-child {
+  position: relative !important;
+  padding-right: 8px !important;
+}
+
+/* Question typography */
+.notion-callout.bg-orange-light .notion-column-list > .notion-column:first-child :is(
+  h1, h2, h3,
+  .notion-h1, .notion-h2, .notion-h3,
+  strong
+) {
+  color: #1F1A16 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.2 !important;
+  margin-bottom: 0 !important;
+}
+
+/* If the question is plain text (not a heading), style it like one */
+.notion-callout.bg-orange-light .notion-column-list > .notion-column:first-child .notion-text {
+  color: #1F1A16 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.22 !important;
+  font-size: 1.02em !important;
+}
+
+/* Right column (Answer) */
+.notion-callout.bg-orange-light .notion-column-list > .notion-column:last-child :is(.notion-text, p, li) {
+  color: #332C25 !important;
+  line-height: 1.55 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Clean spacing inside text blocks */
+.notion-callout.bg-orange-light :is(.notion-text, p, li) {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Subtle divider between question and answer */
+.notion-callout.bg-orange-light .notion-column-list > .notion-column:first-child::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: -14px;
+  width: 1px;
+  height: calc(100% - 8px);
+  background: linear-gradient(
+    180deg,
+    rgba(122, 90, 59, 0.00) 0%,
+    rgba(122, 90, 59, 0.10) 20%,
+    rgba(122, 90, 59, 0.10) 80%,
+    rgba(122, 90, 59, 0.00) 100%
+  );
+}
+
+/* =========================================
+   Responsive (tablet/mobile)
+========================================= */
+@media (max-width: 980px) {
+  .notion-callout.bg-orange-light {
+    padding: 18px 18px !important;
+    border-radius: 16px !important;
+    margin: 10px 0 !important;
+  }
+
+  .notion-callout.bg-orange-light .notion-column-list {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .notion-callout.bg-orange-light .notion-column-list > .notion-column:first-child {
+    padding-right: 0 !important;
+  }
+
+  .notion-callout.bg-orange-light .notion-column-list > .notion-column:first-child::after {
+    display: none !important;
+  }
+
+  /* Add a soft horizontal separator on stacked layout */
+  .notion-callout.bg-orange-light .notion-column-list > .notion-column:last-child {
+    border-top: 1px solid rgba(122, 90, 59, 0.10) !important;
+    padding-top: 10px !important;
+  }
+
+  .notion-callout.bg-orange-light .notion-column-list > .notion-column:first-child :is(
+    .notion-text, h1, h2, h3, .notion-h1, .notion-h2, .notion-h3
+  ) {
+    margin-bottom: 0 !important;
+    font-size: 1em !important;
+    line-height: 1.22 !important;
+  }
+
+  .notion-callout.bg-orange-light .notion-column-list > .notion-column:last-child :is(.notion-text, p, li) {
+    font-size: 0.98em !important;
+    line-height: 1.52 !important;
+  }
+}
+
+/* Extra-small phones */
+@media (max-width: 520px) {
+  .notion-callout.bg-orange-light {
+    padding: 16px 14px !important;
+    border-radius: 14px !important;
+  }
+
+  .notion-callout.bg-orange-light .notion-column-list {
+    gap: 8px !important;
+  }
+
+  .notion-callout.bg-orange-light .notion-column-list > .notion-column:last-child {
+    padding-top: 8px !important;
+  }
+}
+
+/* =========================================
+   Premium FAQ Callouts (Matches Brown Option 2)
+   Selector only: .notion-callout.bg-orange-light
+========================================= */
+
+.notion-callout.bg-orange-light {
+  position: relative !important;
+  isolation: isolate !important;
+  width: 100% !important;
+  margin: 12px 0 !important;
+  padding: 22px 24px !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+
+  /* Warm premium surface with richer depth (matches testimonial cards) */
+  background:
+    radial-gradient(140% 110% at 0% 0%, rgba(255, 255, 255, 0.44) 0%, transparent 56%),
+    radial-gradient(95% 120% at 100% 100%, rgba(90, 68, 49, 0.07) 0%, transparent 64%),
+    radial-gradient(78% 54% at 88% 12%, rgba(255, 231, 204, 0.15) 0%, transparent 65%),
+    linear-gradient(180deg, #F5EFE7 0%, #EEE6DB 100%) !important;
+
+  border: 1px solid rgba(96, 73, 54, 0.13) !important;
+
+  box-shadow:
+    0 12px 28px rgba(30, 24, 19, 0.05),
+    0 1px 0 rgba(255, 255, 255, 0.72) inset,
+    0 -1px 0 rgba(96, 73, 54, 0.03) inset,
+    inset 3px 0 0 rgba(176, 120, 44, 0.12) !important; /* premium accent */
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease !important;
+}
+
+/* Premium sheen */
+.notion-callout.bg-orange-light::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.20) 0%,
+      rgba(255, 255, 255, 0.07) 28%,
+      rgba(255, 255, 255, 0) 58%
+    ),
+    linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0) 24%,
+      rgba(255, 255, 255, 0.07) 42%,
+      rgba(255, 255, 255, 0) 56%
+    );
+}
+
+/* Soft edge vignette depth */
+.notion-callout.bg-orange-light::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 0;
+  background:
+    radial-gradient(120% 100% at 100% 100%, rgba(70, 54, 40, 0.04) 0%, transparent 62%),
+    radial-gradient(110% 90% at 0% 100%, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+}
+
+/* Hover polish (desktop only) */
+@media (hover: hover) {
+  .notion-callout.bg-orange-light:hover {
+    transform: translateY(-2px) !important;
+    border-color: rgba(96, 73, 54, 0.20) !important;
+    box-shadow:
+      0 16px 34px rgba(30, 24, 19, 0.07),
+      0 1px 0 rgba(255, 255, 255, 0.78) inset,
+      0 -1px 0 rgba(96, 73, 54, 0.04) inset,
+      inset 3px 0 0 rgba(176, 120, 44, 0.18) !important;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .notion-callout.bg-orange-light {
+    transition: none !important;
+  }
+  .notion-callout.bg-orange-light:hover {
+    transform: none !important;
+  }
+}
+
+/* Keep content above overlays */
+.notion-callout.bg-orange-light > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* FAQ cards look cleaner without callout icon */
+.notion-callout.bg-orange-light .notion-callout__icon {
+  display: none !important;
+}
+
+/* Normalize content wrapper */
+.notion-callout.bg-orange-light .notion-callout__content {
+  position: relative !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  color: #2A241F !important;
+}
+
+/* Thin top accent line for premium detail */
+.notion-callout.bg-orange-light .notion-callout__content::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 58px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(176, 120, 44, 0.34) 0%,
+    rgba(176, 120, 44, 0.08) 100%
+  );
+  pointer-events: none;
+}
+
+/* Two-column FAQ layout (Question | Answer) */
+.notion-callout.bg-orange-light .notion-column-list {
+  display: grid !important;
+  grid-template-columns: minmax(220px, 0.95fr) minmax(0, 1.35fr) !important;
+  gap: 20px 28px !important;
+  align-items: start !important;
+  width: 100% !important;
+}
+
+/* Reset Notion inline widths */
+.notion-callout.bg-orange-light .notion-column-list > .notion-column {
+  width: auto !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+}
+
+/* Left column (Question) */
+.notion-callout.bg-orange-light .notion-column-list > .notion-column:first-child {
+  position: relative !important;
+  padding-right: 8px !important;
+}
+
+/* Question typography */
+.notion-callout.bg-orange-light .notion-column-list > .notion-column:first-child :is(
+  h1, h2, h3,
+  .notion-h1, .notion-h2, .notion-h3,
+  strong
+) {
+  color: #1B1612 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  line-height: 1.2 !important;
+  margin-bottom: 0 !important;
+}
+
+/* If question is plain text */
+.notion-callout.bg-orange-light .notion-column-list > .notion-column:first-child .notion-text {
+  color: #1B1612 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.22 !important;
+  font-size: 1.03em !important;
+}
+
+/* Right column (Answer) */
+.notion-callout.bg-orange-light .notion-column-list > .notion-column:last-child :is(.notion-text, p, li) {
+  color: #352D26 !important;
+  line-height: 1.55 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Clean spacing inside text blocks */
+.notion-callout.bg-orange-light :is(.notion-text, p, li) {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Subtle divider between question and answer */
+.notion-callout.bg-orange-light .notion-column-list > .notion-column:first-child::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: -14px;
+  width: 1px;
+  height: calc(100% - 8px);
+  background: linear-gradient(
+    180deg,
+    rgba(122, 90, 59, 0.00) 0%,
+    rgba(122, 90, 59, 0.12) 20%,
+    rgba(122, 90, 59, 0.12) 80%,
+    rgba(122, 90, 59, 0.00) 100%
+  );
+}
+
+/* =========================================
+   Responsive (tablet/mobile)
+========================================= */
+@media (max-width: 980px) {
+  .notion-callout.bg-orange-light {
+    padding: 18px 18px !important;
+    border-radius: 16px !important;
+    margin: 10px 0 !important;
+  }
+
+  .notion-callout.bg-orange-light .notion-callout__content::before {
+    width: 46px;
+  }
+
+  .notion-callout.bg-orange-light .notion-column-list {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .notion-callout.bg-orange-light .notion-column-list > .notion-column:first-child {
+    padding-right: 0 !important;
+  }
+
+  .notion-callout.bg-orange-light .notion-column-list > .notion-column:first-child::after {
+    display: none !important;
+  }
+
+  /* Soft separator on stacked layout */
+  .notion-callout.bg-orange-light .notion-column-list > .notion-column:last-child {
+    border-top: 1px solid rgba(122, 90, 59, 0.10) !important;
+    padding-top: 10px !important;
+  }
+
+  .notion-callout.bg-orange-light .notion-column-list > .notion-column:first-child :is(
+    .notion-text, h1, h2, h3, .notion-h1, .notion-h2, .notion-h3
+  ) {
+    margin-bottom: 0 !important;
+    font-size: 1em !important;
+    line-height: 1.22 !important;
+  }
+
+  .notion-callout.bg-orange-light .notion-column-list > .notion-column:last-child :is(.notion-text, p, li) {
+    font-size: 0.98em !important;
+    line-height: 1.52 !important;
+  }
+}
+
+/* Extra-small phones */
+@media (max-width: 520px) {
+  .notion-callout.bg-orange-light {
+    padding: 16px 14px !important;
+    border-radius: 14px !important;
+  }
+
+  .notion-callout.bg-orange-light .notion-callout__content::before {
+    width: 40px;
+  }
+
+  .notion-callout.bg-orange-light .notion-column-list {
+    gap: 8px !important;
+  }
+
+  .notion-callout.bg-orange-light .notion-column-list > .notion-column:last-child {
+    padding-top: 8px !important;
+  }
+}
+/* =========================================
+   Premium Section Header System
+   Targets:
+   - h2.notion-heading
+   - .notion-text .bg-brown (used as selector marker only)
+   Goal: centered, premium, minimal, warm-editorial
+========================================= */
+
+/* =========================================
+   SECTION TITLE + SUBTITLE (Premium / Business)
+   Brown marker is used as selector only
+========================================= */
+
+/* H2 Title */
+h2.notion-heading {
+  width: 100% !important;
+  max-width: 1100px !important;
+  margin: 0 auto 10px auto !important;
+  text-align: center !important;
+
+  color: #1C1713 !important;
+  font-weight: 800 !important;
+  font-size: 2.35rem !important;   /* stronger title presence */
+  letter-spacing: -0.03em !important;
+  line-height: 1.08 !important;
+
+  position: relative !important;
+}
+
+/* Keep nested spans consistent */
+h2.notion-heading .notion-semantic-string,
+h2.notion-heading span {
+  color: inherit !important;
+  font-weight: inherit !important;
+}
+
+/* Subtle premium divider under H2 */
+h2.notion-heading::after {
+  content: "";
+  display: block;
+  width: 92px;
+  height: 1px;
+  margin: 10px auto 0 auto;
+  background: linear-gradient(
+    90deg,
+    rgba(122, 90, 59, 0.00) 0%,
+    rgba(122, 90, 59, 0.38) 50%,
+    rgba(122, 90, 59, 0.00) 100%
+  );
+}
+
+/* Subtitle row wrapper (centered) */
+.notion-text:has(.bg-brown),
+.notion-text.bg-brown {
+  width: 100% !important;
+  max-width: 1100px !important;
+  margin: 6px auto 18px auto !important;
+  text-align: center !important;
+  line-height: 1.4 !important;
+}
+
+/* Reset Notion brown marker and style it as premium subtitle text */
+.notion-text .bg-brown,
+.notion-text.bg-brown {
+  display: inline-block !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  color: #4A3E34 !important;       /* deeper tone for better contrast */
+  font-weight: 500 !important;
+  font-size: 1.08rem !important;   /* slightly larger subtitle */
+  letter-spacing: -0.01em !important;
+  line-height: 1.45 !important;
+}
+
+/* Keep nested text inside subtitle consistent */
+.notion-text .bg-brown .notion-semantic-string,
+.notion-text.bg-brown .notion-semantic-string,
+.notion-text .bg-brown span,
+.notion-text.bg-brown span {
+  color: inherit !important;
+  background: transparent !important;
+}
+
+/* Optional micro-polish if subtitle follows H2 directly */
+h2.notion-heading + .notion-text {
+  margin-top: 4px !important;
+}
+
+/* =========================================
+   Responsive polish
+========================================= */
+@media (max-width: 980px) {
+  h2.notion-heading {
+    font-size: 2rem !important;   /* ~32px */
+    line-height: 1.1 !important;
+    letter-spacing: -0.025em !important;
+    margin-bottom: 8px !important;
+  }
+
+  h2.notion-heading::after {
+    width: 76px;
+    margin-top: 8px;
+  }
+
+  .notion-text:has(.bg-brown),
+  .notion-text.bg-brown {
+    margin: 4px auto 14px auto !important;
+  }
+
+  .notion-text .bg-brown,
+  .notion-text.bg-brown {
+    font-size: 1rem !important;
+    line-height: 1.42 !important;
+  }
+}
+
+@media (max-width: 520px) {
+  h2.notion-heading {
+    font-size: 1.7rem !important; /* ~27px */
+    line-height: 1.12 !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  h2.notion-heading::after {
+    width: 60px;
+  }
+
+  .notion-text .bg-brown,
+  .notion-text.bg-brown {
+    font-size: 0.96rem !important;
+    line-height: 1.4 !important;
+  }
+}
+
+
+/* =========================================
+   Premium Testimonial Callouts (Luxury Edge)
+   Selector only: .notion-callout.bg-brown-light
+========================================= */
+
+.notion-callout.bg-brown-light {
+  position: relative !important;
+  isolation: isolate !important;
+  width: 100% !important;
+  margin: 12px 0 !important;
+  padding: 20px 22px !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+
+  /* Richer premium surface */
+  background:
+    radial-gradient(120% 120% at 0% 0%, rgba(255, 255, 255, 0.42) 0%, transparent 56%),
+    radial-gradient(90% 120% at 100% 100%, rgba(88, 68, 50, 0.07) 0%, transparent 64%),
+    linear-gradient(180deg, #F2ECE6 0%, #EAE2DA 100%) !important;
+
+  border: 1px solid rgba(95, 73, 54, 0.14) !important;
+
+  box-shadow:
+    0 12px 28px rgba(30, 24, 19, 0.06),
+    0 1px 0 rgba(255, 255, 255, 0.72) inset,
+    0 -1px 0 rgba(95, 73, 54, 0.04) inset !important;
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease !important;
+}
+
+/* Top sheen */
+.notion-callout.bg-brown-light::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.20) 0%,
+    rgba(255, 255, 255, 0.07) 28%,
+    rgba(255, 255, 255, 0) 58%
+  );
+}
+
+/* Soft edge vignette for luxury depth */
+.notion-callout.bg-brown-light::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(120% 100% at 100% 100%, rgba(70, 54, 40, 0.05) 0%, transparent 62%),
+    radial-gradient(110% 90% at 0% 100%, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+}
+
+/* Hover polish */
+@media (hover: hover) {
+  .notion-callout.bg-brown-light:hover {
+    transform: translateY(-2px) !important;
+    border-color: rgba(95, 73, 54, 0.20) !important;
+    box-shadow:
+      0 16px 34px rgba(30, 24, 19, 0.08),
+      0 1px 0 rgba(255, 255, 255, 0.78) inset,
+      0 -1px 0 rgba(95, 73, 54, 0.05) inset !important;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .notion-callout.bg-brown-light {
+    transition: none !important;
+  }
+  .notion-callout.bg-brown-light:hover {
+    transform: none !important;
+  }
+}
+
+/* Keep content above overlays */
+.notion-callout.bg-brown-light > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Icon/avatar spacing */
+.notion-callout.bg-brown-light .notion-callout__icon {
+  margin-right: 10px !important;
+  margin-top: 1px !important;
+  opacity: 0.98 !important;
+}
+
+/* Keep emoji/icon subtle */
+.notion-callout.bg-brown-light .notion-callout__icon span {
+  filter: saturate(0.95);
+}
+
+/* Content wrapper */
+.notion-callout.bg-brown-light .notion-callout__content {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  color: #2A221C !important;
+}
+
+/* Base text */
+.notion-callout.bg-brown-light .notion-callout__content :is(.notion-text, p, li) {
+  color: #2D251F !important;
+  line-height: 1.52 !important;
+  letter-spacing: -0.01em !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Name / bold line */
+.notion-callout.bg-brown-light .notion-callout__content strong,
+.notion-callout.bg-brown-light .notion-callout__content b {
+  color: #18130F !important;
+  font-weight: 700 !important;
+}
+
+/* Secondary/meta text */
+.notion-callout.bg-brown-light .notion-semantic-string[class*="color-gray"],
+.notion-callout.bg-brown-light .notion-callout__content .color-gray {
+  color: #665646 !important;
+}
+
+/* Vertical rhythm for multiple text rows */
+.notion-callout.bg-brown-light .notion-callout__content .notion-text + .notion-text {
+  margin-top: 6px !important;
+}
+
+/* If chips/markers exist inside */
+.notion-callout.bg-brown-light .notion-semantic-string[class*="bg-"] {
+  border-radius: 6px !important;
+}
+
+/* Last line (stars) if plain text stars */
+.notion-callout.bg-brown-light .notion-callout__content .notion-text:last-child {
+  color: #AE7417 !important;
+  letter-spacing: 0.04em !important;
+}
+
+/* =========================================
+   Responsive
+========================================= */
+@media (max-width: 980px) {
+  .notion-callout.bg-brown-light {
+    padding: 18px 18px !important;
+    border-radius: 14px !important;
+    margin: 10px 0 !important;
+  }
+
+  .notion-callout.bg-brown-light .notion-callout__content :is(.notion-text, p, li) {
+    line-height: 1.48 !important;
+  }
+
+  .notion-callout.bg-brown-light .notion-callout__content .notion-text + .notion-text {
+    margin-top: 5px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .notion-callout.bg-brown-light {
+    padding: 16px 14px !important;
+    border-radius: 13px !important;
+  }
+
+  .notion-callout.bg-brown-light .notion-callout__content :is(.notion-text, p, li) {
+    font-size: 0.96em !important;
+    line-height: 1.45 !important;
+  }
+}
+
+/* =========================================
+   Premium Testimonial Callouts (Luxury Edge + Flashy Pro)
+   Selector only: .notion-callout.bg-brown-light
+========================================= */
+
+.notion-callout.bg-brown-light {
+  position: relative !important;
+  isolation: isolate !important;
+  width: 100% !important;
+  margin: 12px 0 !important;
+  padding: 20px 22px !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+
+  /* Rich warm-neutral premium surface */
+  background:
+    radial-gradient(140% 110% at 0% 0%, rgba(255, 255, 255, 0.46) 0%, transparent 56%),
+    radial-gradient(100% 120% at 100% 100%, rgba(90, 68, 49, 0.08) 0%, transparent 64%),
+    radial-gradient(80% 55% at 85% 12%, rgba(255, 231, 204, 0.18) 0%, transparent 65%),
+    linear-gradient(180deg, #F3ECE5 0%, #EAE2D9 100%) !important;
+
+  border: 1px solid rgba(96, 73, 54, 0.14) !important;
+
+  box-shadow:
+    0 12px 28px rgba(30, 24, 19, 0.06),
+    0 1px 0 rgba(255, 255, 255, 0.72) inset,
+    0 -1px 0 rgba(96, 73, 54, 0.04) inset,
+    inset 3px 0 0 rgba(176, 120, 44, 0.16) !important; /* subtle luxury accent */
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease !important;
+}
+
+/* Top sheen (flashy but subtle) */
+.notion-callout.bg-brown-light::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.22) 0%,
+      rgba(255, 255, 255, 0.08) 28%,
+      rgba(255, 255, 255, 0) 58%
+    ),
+    linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0) 25%,
+      rgba(255, 255, 255, 0.08) 42%,
+      rgba(255, 255, 255, 0) 56%
+    );
+}
+
+/* Soft edge vignette for depth */
+.notion-callout.bg-brown-light::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(120% 100% at 100% 100%, rgba(70, 54, 40, 0.05) 0%, transparent 62%),
+    radial-gradient(110% 90% at 0% 100%, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+}
+
+/* Hover polish (desktop) */
+@media (hover: hover) {
+  .notion-callout.bg-brown-light:hover {
+    transform: translateY(-3px) !important;
+    border-color: rgba(96, 73, 54, 0.22) !important;
+    box-shadow:
+      0 16px 34px rgba(30, 24, 19, 0.08),
+      0 1px 0 rgba(255, 255, 255, 0.78) inset,
+      0 -1px 0 rgba(96, 73, 54, 0.05) inset,
+      inset 3px 0 0 rgba(176, 120, 44, 0.24) !important;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .notion-callout.bg-brown-light {
+    transition: none !important;
+  }
+  .notion-callout.bg-brown-light:hover {
+    transform: none !important;
+  }
+}
+
+/* Keep content above overlays */
+.notion-callout.bg-brown-light > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Icon/avatar spacing */
+.notion-callout.bg-brown-light .notion-callout__icon {
+  margin-right: 10px !important;
+  margin-top: 1px !important;
+  opacity: 0.98 !important;
+}
+
+/* If icon is an uploaded image/avatar */
+.notion-callout.bg-brown-light .notion-callout__icon img {
+  border-radius: 999px !important;
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.75),
+    0 0 0 4px rgba(176, 120, 44, 0.08),
+    0 4px 10px rgba(30, 24, 19, 0.08) !important;
+}
+
+/* If icon is emoji/text */
+.notion-callout.bg-brown-light .notion-callout__icon span {
+  filter: saturate(0.95);
+}
+
+/* Content wrapper */
+.notion-callout.bg-brown-light .notion-callout__content {
+  position: relative !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  color: #2A221C !important;
+}
+
+/* Subtle quote detail (flashy but professional) */
+.notion-callout.bg-brown-light .notion-callout__content::before {
+  content: "“";
+  position: absolute;
+  top: -6px;
+  right: 2px;
+  font-size: 56px;
+  line-height: 1;
+  font-weight: 700;
+  color: rgba(150, 102, 34, 0.12);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Thin accent line near top of content for premium detail */
+.notion-callout.bg-brown-light .notion-callout__content::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 54px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(176, 120, 44, 0.35) 0%,
+    rgba(176, 120, 44, 0.08) 100%
+  );
+  pointer-events: none;
+}
+
+/* Base text */
+.notion-callout.bg-brown-light .notion-callout__content :is(.notion-text, p, li) {
+  position: relative;
+  z-index: 1;
+  color: #2D251F !important;
+  line-height: 1.52 !important;
+  letter-spacing: -0.01em !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Name / strong line */
+.notion-callout.bg-brown-light .notion-callout__content strong,
+.notion-callout.bg-brown-light .notion-callout__content b {
+  color: #18130F !important;
+  font-weight: 700 !important;
+}
+
+/* Secondary/meta text (role/location) */
+.notion-callout.bg-brown-light .notion-semantic-string[class*="color-gray"],
+.notion-callout.bg-brown-light .notion-callout__content .color-gray {
+  color: #665646 !important;
+}
+
+/* Vertical rhythm between text rows */
+.notion-callout.bg-brown-light .notion-callout__content .notion-text + .notion-text {
+  margin-top: 6px !important;
+}
+
+/* Marker chips inside callout (if any) */
+.notion-callout.bg-brown-light .notion-semantic-string[class*="bg-"] {
+  border-radius: 6px !important;
+}
+
+/* Star rating row (if plain text stars are on the last line) */
+.notion-callout.bg-brown-light .notion-callout__content .notion-text:last-child {
+  color: #B6791A !important;
+  letter-spacing: 0.04em !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+/* =========================================
+   Responsive
+========================================= */
+@media (max-width: 980px) {
+  .notion-callout.bg-brown-light {
+    padding: 18px 18px !important;
+    border-radius: 14px !important;
+    margin: 10px 0 !important;
+  }
+
+  .notion-callout.bg-brown-light .notion-callout__content::before {
+    font-size: 48px;
+    top: -4px;
+    right: 0;
+  }
+
+  .notion-callout.bg-brown-light .notion-callout__content::after {
+    width: 46px;
+  }
+
+  .notion-callout.bg-brown-light .notion-callout__content :is(.notion-text, p, li) {
+    line-height: 1.48 !important;
+  }
+
+  .notion-callout.bg-brown-light .notion-callout__content .notion-text + .notion-text {
+    margin-top: 5px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .notion-callout.bg-brown-light {
+    padding: 16px 14px !important;
+    border-radius: 13px !important;
+  }
+
+  .notion-callout.bg-brown-light .notion-callout__content::before {
+    font-size: 40px;
+    top: -2px;
+    right: -1px;
+    color: rgba(150, 102, 34, 0.10);
+  }
+
+  .notion-callout.bg-brown-light .notion-callout__content::after {
+    width: 40px;
+  }
+
+  .notion-callout.bg-brown-light .notion-callout__content :is(.notion-text, p, li) {
+    font-size: 0.96em !important;
+    line-height: 1.45 !important;
+  }
+}
+
+
+/*************Marquee****************/
+html, body,
+.notion-page-content,
+.notion-page-content-inner {
+  overflow-x: hidden !important;
+}
+
+/* Marquee row (the column-list that contains your red callouts) */
+.notion-column-list:has(.notion-callout.bg-red-light) {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  gap: 16px !important;
+
+  width: max-content !important;
+  max-width: none !important;
+
+  /* smooth infinite motion */
+  animation: premiumCalloutMarquee 24s linear infinite !important;
+  will-change: transform;
+
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+/* Pause marquee on hover (readability) */
+.notion-column-list:has(.notion-callout.bg-red-light):hover {
+  animation-play-state: paused !important;
+}
+
+/* Consistent card widths for clean rhythm */
+.notion-column-list:has(.notion-callout.bg-red-light) > .notion-column {
+  flex: 0 0 300px !important;
+  min-width: 300px !important;
+  max-width: 300px !important;
+  margin: 0 !important;
+}
+
+/* Red callout cards (selector only; visual style is neutral) */
+.notion-callout.bg-red-light {
+  min-height: 88px !important;
+  padding: 16px 18px !important;
+  border-radius: 14px !important;
+
+  display: flex !important;
+  align-items: center !important;
+
+  /* Final visual output (clean marquee chips) */
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* Callout content */
+.notion-callout.bg-red-light .notion-callout__content,
+.notion-callout.bg-red-light .notion-callout__content * {
+  color: #1B1F33 !important;
+  font-size: 17px !important;
+  font-weight: 500 !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Icon spacing + sizing */
+.notion-callout.bg-red-light .notion-callout__icon {
+  margin-right: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.notion-callout.bg-red-light .notion-callout__icon img,
+.notion-callout.bg-red-light .notion-callout__icon span {
+  width: 24px !important;
+  height: 24px !important;
+  max-width: 24px !important;
+  max-height: 24px !important;
+}
+
+/* Disable card hover effect (marquee only moves the row) */
+.notion-callout.bg-red-light:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Seamless marquee
+   Best result: duplicate the full set once (2 identical sets) */
+@keyframes premiumCalloutMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(-50% - 8px)); }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .notion-column-list:has(.notion-callout.bg-red-light) {
+    gap: 14px !important;
+    animation-duration: 22s !important;
+  }
+
+  .notion-column-list:has(.notion-callout.bg-red-light) > .notion-column {
+    flex: 0 0 260px !important;
+    min-width: 260px !important;
+    max-width: 260px !important;
+  }
+
+  .notion-callout.bg-red-light {
+    min-height: 80px !important;
+    border-radius: 12px !important;
+    padding: 14px 16px !important;
+  }
+
+  .notion-callout.bg-red-light .notion-callout__content,
+  .notion-callout.bg-red-light .notion-callout__content * {
+    font-size: 16px !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .notion-column-list:has(.notion-callout.bg-red-light) {
+    gap: 12px !important;
+    animation-duration: 18s !important;
+  }
+
+  .notion-column-list:has(.notion-callout.bg-red-light) > .notion-column {
+    flex: 0 0 220px !important;
+    min-width: 220px !important;
+    max-width: 220px !important;
+  }
+
+  .notion-callout.bg-red-light {
+    min-height: 72px !important;
+    border-radius: 12px !important;
+    padding: 12px 14px !important;
+  }
+
+  .notion-callout.bg-red-light .notion-callout__content,
+  .notion-callout.bg-red-light .notion-callout__content * {
+    font-size: 15px !important;
+  }
+
+  .notion-callout.bg-red-light .notion-callout__icon img,
+  .notion-callout.bg-red-light .notion-callout__icon span {
+    width: 20px !important;
+    height: 20px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .notion-column-list:has(.notion-callout.bg-red-light) {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+/* Bigger marquee icons (red callouts) */
+.notion-callout.bg-red-light .notion-callout__icon {
+  margin-right: 12px !important;
+}
+
+.notion-callout.bg-red-light .notion-callout__icon img,
+.notion-callout.bg-red-light .notion-callout__icon span,
+.notion-callout.bg-red-light .notion-callout__icon svg {
+  width: 40px !important;
+  height: 40px !important;
+  max-width: 50px !important;
+  max-height: 50px !important;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .notion-callout.bg-red-light .notion-callout__icon img,
+  .notion-callout.bg-red-light .notion-callout__icon span,
+  .notion-callout.bg-red-light .notion-callout__icon svg {
+    width: 36px !important;
+    height: 36px !important;
+    max-width: 36px !important;
+    max-height: 36px !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .notion-callout.bg-red-light .notion-callout__icon img,
+  .notion-callout.bg-red-light .notion-callout__icon span,
+  .notion-callout.bg-red-light .notion-callout__icon svg {
+    width: 27px !important;
+    height: 27px !important;
+    max-width: 27px !important;
+    max-height: 27px !important;
+  }
+}
+
+
+/* =========================================
+   SUPER / NOTION GALLERY → PREMIUM SLIDER
+   Target: .notion-collection-gallery.medium
+========================================= */
+
+/* 1) Fallback grid (before JS initializes) */
+.notion-collection-gallery.medium:not(.super-slider-ready) {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+  align-items: stretch !important;
+}
+
+.notion-collection-gallery.medium:not(.super-slider-ready) > .notion-collection-card,
+.notion-collection-gallery.medium:not(.super-slider-ready) > a.notion-collection-card {
+  width: auto !important;
+  margin: 0 !important;
+}
+
+/* Tablet */
+@media (max-width: 1023px) {
+  .notion-collection-gallery.medium:not(.super-slider-ready) {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .notion-collection-gallery.medium:not(.super-slider-ready) {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* 2) Slider shell injected by JS */
+.super-gallery-slider {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 2px;
+}
+
+.super-gallery-viewport {
+  overflow: hidden;
+  width: 100%;
+  border-radius: 18px;
+  position: relative;
+}
+
+/* 3) Turn gallery into a horizontal track */
+.super-gallery-slider .notion-collection-gallery.medium.super-slider-ready {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 16px !important;
+  align-items: stretch !important;
+  transform: translate3d(0, 0, 0);
+  transition: transform 650ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform;
+  padding: 4px 2px 10px 2px;
+}
+
+/* Hide any accidental scrollbars */
+.super-gallery-slider .notion-collection-gallery.medium.super-slider-ready::-webkit-scrollbar {
+  display: none;
+}
+.super-gallery-slider .notion-collection-gallery.medium.super-slider-ready {
+  scrollbar-width: none;
+}
+
+/* 4) Force 3 / 2 / 1 cards per view */
+.super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > .notion-collection-card,
+.super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > a.notion-collection-card {
+  flex: 0 0 calc((100% - 32px) / 3) !important; /* 3 cards, 2 gaps */
+  max-width: calc((100% - 32px) / 3) !important;
+  width: calc((100% - 32px) / 3) !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+
+  position: relative !important;
+  overflow: hidden !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(24, 24, 24, 0.08) !important;
+
+  background: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  box-shadow:
+    0 1px 1px rgba(20, 20, 20, 0.03),
+    0 8px 20px rgba(20, 20, 20, 0.06) !important;
+
+  transform: translateY(0) scale(1);
+  transition:
+    transform 500ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 500ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    border-color 350ms ease,
+    background 350ms ease !important;
+}
+
+/* Tablet: 2 cards */
+@media (max-width: 1023px) {
+  .super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > .notion-collection-card,
+  .super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > a.notion-collection-card {
+    flex: 0 0 calc((100% - 16px) / 2) !important;
+    max-width: calc((100% - 16px) / 2) !important;
+    width: calc((100% - 16px) / 2) !important;
+  }
+}
+
+/* Mobile: 1 card */
+@media (max-width: 767px) {
+  .super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > .notion-collection-card,
+  .super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > a.notion-collection-card {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+}
+
+/* 5) Premium hover effect (wow-factor) */
+.super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > .notion-collection-card::before,
+.super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > a.notion-collection-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+
+  /* Glass + gradient reveal */
+  background:
+    linear-gradient(145deg,
+      rgba(255, 255, 255, 0.22) 0%,
+      rgba(255, 255, 255, 0.06) 35%,
+      rgba(255, 255, 255, 0.00) 60%
+    ),
+    radial-gradient(
+      120% 90% at 10% 0%,
+      rgba(255, 255, 255, 0.24) 0%,
+      rgba(255, 255, 255, 0.00) 58%
+    );
+  transition: opacity 420ms ease;
+}
+
+.super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > .notion-collection-card::after,
+.super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > a.notion-collection-card::after {
+  content: "";
+  position: absolute;
+  inset: -20% -40%;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transform: translateX(-25%) rotate(8deg);
+
+  /* Sheen pass */
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.00) 0%,
+    rgba(255, 255, 255, 0.12) 45%,
+    rgba(255, 255, 255, 0.22) 50%,
+    rgba(255, 255, 255, 0.10) 55%,
+    rgba(255, 255, 255, 0.00) 100%
+  );
+
+  transition:
+    opacity 250ms ease,
+    transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Lift + depth on hover */
+@media (hover: hover) {
+  .super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > .notion-collection-card:hover,
+  .super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > a.notion-collection-card:hover {
+    transform: translateY(-6px) scale(1.012) !important;
+    border-color: rgba(24, 24, 24, 0.14) !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    box-shadow:
+      0 10px 26px rgba(20, 20, 20, 0.08),
+      0 24px 54px rgba(20, 20, 20, 0.10) !important;
+  }
+
+  .super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > .notion-collection-card:hover::before,
+  .super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > a.notion-collection-card:hover::before {
+    opacity: 1;
+  }
+
+  .super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > .notion-collection-card:hover::after,
+  .super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > a.notion-collection-card:hover::after {
+    opacity: 1;
+    transform: translateX(20%) rotate(8deg);
+  }
+}
+
+/* Cover image polish */
+.super-gallery-slider .notion-collection-gallery.medium.super-slider-ready .notion-collection-card__cover {
+  overflow: hidden !important;
+  border-radius: 14px 14px 0 0 !important;
+  position: relative !important;
+}
+
+.super-gallery-slider .notion-collection-gallery.medium.super-slider-ready .notion-collection-card__cover img {
+  transform: scale(1);
+  transition:
+    transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter 450ms ease !important;
+  will-change: transform;
+}
+
+@media (hover: hover) {
+  .super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > .notion-collection-card:hover .notion-collection-card__cover img,
+  .super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > a.notion-collection-card:hover .notion-collection-card__cover img {
+    transform: scale(1.045);
+    filter: saturate(1.05) contrast(1.02);
+  }
+}
+
+/* Content panel refinement */
+.super-gallery-slider .notion-collection-gallery.medium.super-slider-ready .notion-collection-card__content {
+  position: relative !important;
+  z-index: 3 !important;
+  background: linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.96) 100%) !important;
+}
+
+/* 6) Arrow buttons */
+.super-gallery-nav {
+  position: absolute;
+  top: 42%;
+  transform: translateY(-50%);
+  z-index: 10;
+
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(20, 20, 20, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  color: #202020;
+  box-shadow: 0 8px 20px rgba(20, 20, 20, 0.10);
+
+  transition:
+    transform 250ms ease,
+    box-shadow 250ms ease,
+    background 250ms ease,
+    opacity 250ms ease;
+}
+
+.super-gallery-nav:hover:not(:disabled) {
+  transform: translateY(-50%) scale(1.04);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 12px 26px rgba(20, 20, 20, 0.14);
+}
+
+.super-gallery-nav:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.super-gallery-nav.super-gallery-prev {
+  left: 10px;
+}
+
+.super-gallery-nav.super-gallery-next {
+  right: 10px;
+}
+
+.super-gallery-nav svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Mobile arrow sizing */
+@media (max-width: 767px) {
+  .super-gallery-nav {
+    width: 38px;
+    height: 38px;
+    top: 36%;
+  }
+}
+
+/*********Price and product**************/
+
+.notion-collection-gallery.medium p.notion-property.notion-property__text.notion-collection-card__property {
+  font-weight: 800 !important;
+  font-size: clamp(1.2rem, 0.95rem + 0.8vw, 1.5rem) !important; /* scales up to ~24px */
+  line-height: 1.08 !important;
+  letter-spacing: -0.015em !important;
+  color: #7A4F2B !important; /* premium warm accent */
+  margin-top: 4px !important;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.notion-collection-gallery.medium div.notion-property.notion-property__title.notion-collection-card__property {
+  font-weight: 800 !important;
+  font-size: clamp(1.05rem, 0.95rem + 0.35vw, 1.25rem) !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.015em !important;
+  color: #1F1A17 !important;
+  margin-bottom: 6px !important;
+}
+
+/* =========================================
+   PREMIUM POLISH PACK (CSS only, no JS changes)
+   Append this AFTER your current gallery CSS
+========================================= */
+
+/* 1) Card shell refinement (slightly more premium depth + radius) */
+.super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > .notion-collection-card,
+.super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > a.notion-collection-card {
+  border-radius: 18px !important;
+  border: 1px solid rgba(32, 26, 20, 0.08) !important;
+  box-shadow:
+    0 2px 6px rgba(20, 16, 12, 0.03),
+    0 12px 28px rgba(20, 16, 12, 0.06) !important;
+}
+
+/* Stronger but still elegant hover depth */
+@media (hover: hover) {
+  .super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > .notion-collection-card:hover,
+  .super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > a.notion-collection-card:hover {
+    transform: translateY(-8px) scale(1.014) !important;
+    border-color: rgba(32, 26, 20, 0.12) !important;
+    box-shadow:
+      0 10px 26px rgba(20, 16, 12, 0.08),
+      0 22px 46px rgba(20, 16, 12, 0.10) !important;
+  }
+}
+
+/* 2) Image area polish (cleaner top corners + subtle dark gradient for depth) */
+.super-gallery-slider .notion-collection-gallery.medium.super-slider-ready .notion-collection-card__cover {
+  border-radius: 16px 16px 0 0 !important;
+}
+
+.super-gallery-slider .notion-collection-gallery.medium.super-slider-ready .notion-collection-card__cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.65;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.00) 45%, rgba(0, 0, 0, 0.10) 100%),
+    linear-gradient(120deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.00) 42%);
+  transition: opacity 320ms ease;
+}
+
+@media (hover: hover) {
+  .super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > .notion-collection-card:hover .notion-collection-card__cover::after,
+  .super-gallery-slider .notion-collection-gallery.medium.super-slider-ready > a.notion-collection-card:hover .notion-collection-card__cover::after {
+    opacity: 0.9;
+  }
+}
+
+/* 3) Content area spacing (more breathable = more premium) */
+.super-gallery-slider .notion-collection-gallery.medium.super-slider-ready .notion-collection-card__content {
+  padding: 14px 14px 16px !important;
+  background: linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.98) 100%) !important;
+}
+
+/* Mobile spacing */
+@media (max-width: 767px) {
+  .super-gallery-slider .notion-collection-gallery.medium.super-slider-ready .notion-collection-card__content {
+    padding: 12px 12px 14px !important;
+  }
+}
+
+/* 4) Title typography polish */
+.notion-collection-gallery.medium div.notion-property.notion-property__title.notion-collection-card__property {
+  font-weight: 800 !important;
+  font-size: clamp(1.05rem, 0.95rem + 0.35vw, 1.22rem) !important;
+  line-height: 1.12 !important;
+  letter-spacing: -0.018em !important;
+  color: #1F1A17 !important;
+  margin: 2px 0 6px !important;
+}
+
+/* 5) Tag / label polish (works for common Notion select pill markup) */
+.notion-collection-gallery.medium .notion-collection-card__property .notion-pill,
+.notion-collection-gallery.medium .notion-collection-card__property .notion-property__select,
+.notion-collection-gallery.medium .notion-collection-card__property .notion-property__multi_select {
+  font-size: 0.84rem !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+  border-radius: 7px !important;
+}
+
+/* If the pill itself is a span/div, give it a softer premium tint */
+.notion-collection-gallery.medium .notion-collection-card__property .notion-pill {
+  border: 1px solid rgba(122, 79, 43, 0.10) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6) !important;
+}
+
+/* 6) Price: premium anchor styling (your exact target) */
+.notion-collection-gallery.medium p.notion-property.notion-property__text.notion-collection-card__property {
+  font-weight: 800 !important;
+  font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.7rem) !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.02em !important;
+  color: #8B5A2B !important;
+  margin-top: 6px !important;
+  margin-bottom: 0 !important;
+  font-variant-numeric: lining-nums tabular-nums;
+  text-rendering: geometricPrecision;
+}
+
+/* 7) Arrow restyle (less intrusive, more premium) */
+.super-gallery-nav {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(28, 22, 16, 0.10);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow:
+    0 8px 18px rgba(20, 16, 12, 0.08),
+    inset 0 1px 0 rgba(255,255,255,0.7);
+  color: #2A241F;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Push arrows slightly outside the card area on larger screens */
+@media (min-width: 1024px) {
+  .super-gallery-nav.super-gallery-prev {
+    left: -22px;
+  }
+
+  .super-gallery-nav.super-gallery-next {
+    right: -22px;
+  }
+}
+
+.super-gallery-nav svg {
+  width: 17px;
+  height: 17px;
+  stroke-width: 2.4;
+}
+
+.super-gallery-nav:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 12px 24px rgba(20, 16, 12, 0.12),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.super-gallery-nav:disabled {
+  opacity: 0.28;
+  border-color: rgba(28, 22, 16, 0.06);
+  background: rgba(255,255,255,0.55);
+}
+
+/* Tablet/mobile arrow containment (avoid clipping) */
+@media (max-width: 1023px) {
+  .super-gallery-nav.super-gallery-prev {
+    left: 8px;
+  }
+
+  .super-gallery-nav.super-gallery-next {
+    right: 8px;
+  }
+}
+
+@media (max-width: 767px) {
+  .super-gallery-nav {
+    width: 38px;
+    height: 38px;
+    top: 34%;
+  }
+
+  .super-gallery-nav svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+/* 8) Optional: smoother visual rhythm for text stack inside card */
+.notion-collection-gallery.medium .notion-collection-card__content > * {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+
+/* =========================================
+   PREMIUM NOTION FORM SKIN (Super.so)
+   Target: .notion-form
+   Append after existing form/gallery CSS
+========================================= */
+
+/* =========================================
+   Premium Notion Form (Consolidated / Clean)
+   Super.so + Notion
+   Target: .notion-form
+========================================= */
+
+/* Form container */
+.notion-form {
+  position: relative !important;
+  width: min(600px, 100%) !important;
+  max-width: 600px !important;
+  margin: 0 auto !important;
+  padding: 26px !important;
+  border-radius: 18px !important;
+  border: 1px solid rgba(76, 57, 38, 0.12) !important;
+
+  background:
+    radial-gradient(120% 95% at 0% 0%, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0) 58%),
+    linear-gradient(180deg, rgba(255, 253, 249, 0.96) 0%, rgba(249, 244, 236, 0.94) 100%) !important;
+
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.85) inset,
+    0 14px 34px rgba(30, 22, 16, 0.06),
+    0 36px 72px rgba(30, 22, 16, 0.07) !important;
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Top sheen */
+.notion-form::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.9;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.26) 0%,
+    rgba(255, 255, 255, 0.08) 22%,
+    rgba(255, 255, 255, 0) 46%
+  );
+}
+
+/* Labels */
+.notion-form label,
+.notion-form .notion-property__title,
+.notion-form .notion-form__label {
+  color: #211a15 !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+  margin-bottom: 10px !important;
+}
+
+/* Field wrappers */
+.notion-form > div,
+.notion-form .notion-form__item,
+.notion-form .notion-property {
+  margin-bottom: 18px !important;
+}
+
+/* Inputs / selects / textarea */
+.notion-form input,
+.notion-form textarea,
+.notion-form select,
+.notion-form .notion-input,
+.notion-form .notion-textarea {
+  width: 100% !important;
+  min-height: 50px !important;
+  padding: 14px 16px !important;
+
+  color: #231b15 !important;
+  background: rgba(255, 255, 255, 0.82) !important;
+  border: 1px solid rgba(76, 57, 38, 0.1) !important;
+  border-radius: 13px !important;
+
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 6px 14px rgba(30, 22, 16, 0.03) !important;
+
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    background 220ms ease,
+    transform 220ms ease !important;
+}
+
+.notion-form textarea,
+.notion-form .notion-textarea {
+  min-height: 130px !important;
+  resize: vertical !important;
+}
+
+.notion-form input::placeholder,
+.notion-form textarea::placeholder {
+  color: rgba(66, 52, 40, 0.5) !important;
+}
+
+/* Focus states */
+.notion-form input:focus,
+.notion-form textarea:focus,
+.notion-form select:focus,
+.notion-form .notion-input:focus,
+.notion-form .notion-textarea:focus {
+  outline: none !important;
+  border-color: rgba(139, 90, 43, 0.42) !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  transform: translateY(-1px) !important;
+  box-shadow:
+    0 0 0 4px rgba(139, 90, 43, 0.1),
+    0 10px 22px rgba(30, 22, 16, 0.05) !important;
+}
+
+/* Button wrapper radius (helps some Super/Notion button wrappers) */
+.notion-form button,
+.notion-form .notion-button {
+  border-radius: 13px !important;
+}
+
+/* Submit button */
+.notion-form .notion-button__content,
+.notion-form button[type="submit"],
+.notion-form .notion-form__submit {
+  min-width: 120px !important;
+  min-height: 18px !important;
+  padding: 12px 20px !important;
+  border-radius: 10px !important;
+  border: 1px solid rgba(107, 67, 31, 0.22) !important;
+
+  background: linear-gradient(180deg, #9a673b 0%, #7f522d 100%) !important;
+  color: #fffdf9 !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.015em !important;
+
+  box-shadow:
+    0 10px 20px rgba(86, 55, 28, 0.2),
+    0 1px 0 rgba(255, 255, 255, 0.22) inset !important;
+
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    filter 220ms ease !important;
+}
+
+@media (hover: hover) {
+  .notion-form .notion-button__content:hover,
+  .notion-form button[type="submit"]:hover,
+  .notion-form .notion-form__submit:hover {
+    transform: translateY(-2px) !important;
+    filter: brightness(1.03) saturate(1.03) !important;
+    box-shadow:
+      0 14px 26px rgba(86, 55, 28, 0.24),
+      0 1px 0 rgba(255, 255, 255, 0.28) inset !important;
+  }
+}
+
+.notion-form .notion-button__content:active,
+.notion-form button[type="submit"]:active,
+.notion-form .notion-form__submit:active {
+  transform: translateY(0) !important;
+  box-shadow:
+    0 8px 16px rgba(86, 55, 28, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.2) inset !important;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .notion-form {
+    padding: 16px !important;
+    border-radius: 10px !important;
+    
+  }
+
+  .notion-form input,
+  .notion-form textarea,
+  .notion-form select,
+  .notion-form .notion-input,
+  .notion-form .notion-textarea {
+    min-height: 46px !important;
+    padding: 12px 13px !important;
+  }
+
+  .notion-form textarea,
+  .notion-form .notion-textarea {
+    min-height: 110px !important;
+  }
+
+  .notion-form .notion-button__content,
+  .notion-form button[type="submit"],
+  .notion-form .notion-form__submit {
+    min-width: 100px !important;
+    min-height: 26px !important;
+    padding: 11px 16px !important;
+  }
+}
+
+/******Notion button************?
+
+/* Premium dark luxury button (Super / Notion)
+   Target: .notion-button__content.bg-gray-light */
+.notion-button__content.bg-gray-light {
+  position: relative !important;
+  overflow: hidden !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  min-width: 148px !important;
+  min-height: 44px !important;
+  padding: 10px 18px !important;
+  border-radius: 10px !important;
+
+  background:
+    linear-gradient(180deg, rgba(41, 36, 31, 0.98) 0%, rgba(28, 24, 21, 0.98) 100%) !important;
+  border: 1px solid rgba(205, 187, 160, 0.22) !important;
+
+  color: #f3eee6 !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1 !important;
+  text-align: center !important;
+
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 10px 20px rgba(18, 15, 12, 0.16) !important;
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease,
+    color 0.22s ease !important;
+}
+
+/* Soft top sheen */
+.notion-button__content.bg-gray-light::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  border-radius: inherit !important;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 35%,
+    rgba(255, 255, 255, 0) 75%
+  ) !important;
+}
+
+/* Fine gold edge glow */
+.notion-button__content.bg-gray-light::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  border-radius: inherit !important;
+  box-shadow: 0 0 0 1px rgba(223, 202, 171, 0.08) inset !important;
+}
+
+/* Hover polish (desktop) */
+@media (hover: hover) {
+  .notion-button__content.bg-gray-light:hover {
+    transform: translateY(-1px) !important;
+    border-color: rgba(223, 202, 171, 0.34) !important;
+    background:
+      linear-gradient(180deg, rgba(49, 43, 37, 0.99) 0%, rgba(31, 27, 23, 0.99) 100%) !important;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.08) inset,
+      0 14px 28px rgba(18, 15, 12, 0.20) !important;
+  }
+}
+
+/* Active state */
+.notion-button__content.bg-gray-light:active {
+  transform: translateY(0) !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 6px 14px rgba(18, 15, 12, 0.14) !important;
+}
+
+/* Focus state */
+.notion-button__content.bg-gray-light:focus-visible {
+  outline: none !important;
+  border-color: rgba(223, 202, 171, 0.40) !important;
+  box-shadow:
+    0 0 0 3px rgba(223, 202, 171, 0.12),
+    0 1px 0 rgba(255, 255, 255, 0.07) inset,
+    0 12px 24px rgba(18, 15, 12, 0.18) !important;
+}
+
+/* Mobile-friendly tuning */
+@media (max-width: 767px) {
+  .notion-button__content.bg-gray-light {
+    min-width: 136px !important;
+    min-height: 42px !important;
+    padding: 9px 14px !important;
+    border-radius: 9px !important;
+    font-size: 0.95rem !important;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .notion-button__content.bg-gray-light {
+    transition: none !important;
+  }
+}
+
+/* Micro-upgrade: premium button text only */
+.notion-button__content.bg-gray-light,
+.notion-button__content.bg-gray-light * {
+  font-weight: 600 !important;
+  letter-spacing: -0.012em !important;
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+/* If Notion wraps the label in a span/div, keep it centered and clean */
+.notion-button__content.bg-gray-light > * {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1.05 !important;
+  white-space: nowrap !important;
+}
+
+/* Subtle text polish on hover (works with all 3 button variants) */
+@media (hover: hover) {
+  .notion-button__content.bg-gray-light:hover,
+  .notion-button__content.bg-gray-light:hover * {
+    letter-spacing: -0.014em !important;
+  }
+}
+
+/* Mobile text balance */
+@media (max-width: 767px) {
+  .notion-button__content.bg-gray-light,
+  .notion-button__content.bg-gray-light * {
+    font-weight: 600 !important;
+    letter-spacing: -0.01em !important;
+  }
+}
+
+
+/*************Navbar Animation**********/
+
+/* =========================================
+   OPTION 1 — GLASS-LUXE NAVBAR (Super.so)
+   Dark glass + champagne CTA + subtle premium hovers
+   Responsive: desktop / tablet / mobile
+   ========================================= */
+
+/* --- NAVBAR SHELL (glass luxe) --- */
+.super-navbar {
+  position: relative !important;
+  background:
+    linear-gradient(180deg, rgba(20, 14, 12, 0.90) 0%, rgba(18, 13, 11, 0.92) 100%) !important;
+  border-bottom: 1px solid rgba(235, 220, 190, 0.10) !important;
+  backdrop-filter: blur(14px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(120%) !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.035) inset,
+    0 10px 28px rgba(0, 0, 0, 0.18) !important;
+}
+
+/* Soft luxury edge glow */
+.super-navbar::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(245, 235, 220, 0.18) 18%,
+    rgba(245, 235, 220, 0.12) 50%,
+    rgba(245, 235, 220, 0.18) 82%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Common inner wrappers */
+.super-navbar__content,
+.super-navbar .super-navbar__inner,
+.super-navbar .super-navbar__wrapper {
+  min-height: 78px !important;
+}
+
+/* --- LOGO / BRAND --- */
+.super-navbar .super-navbar__logo,
+.super-navbar .super-navbar__brand,
+.super-navbar .super-navbar__logo a,
+.super-navbar .super-navbar__brand a {
+  color: #f7f2e9 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  transition: color 0.22s ease, opacity 0.22s ease !important;
+}
+
+@media (hover: hover) {
+  .super-navbar .super-navbar__logo:hover,
+  .super-navbar .super-navbar__brand:hover,
+  .super-navbar .super-navbar__logo a:hover,
+  .super-navbar .super-navbar__brand a:hover {
+    color: #fffaf3 !important;
+  }
+}
+
+/* =========================================
+   NAV LINKS (desktop/tablet)
+   Center-out underline + brightness lift
+   ========================================= */
+.super-navbar .super-navbar__item,
+.super-navbar .super-navbar__item a,
+.super-navbar .super-navbar__menu a:not(.super-navbar__button),
+.super-navbar .super-navbar__nav a:not(.super-navbar__button) {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 38px !important;
+  padding: 8px 10px !important;
+  border-radius: 10px !important;
+  color: rgba(241, 230, 209, 0.80) !important;
+  text-decoration: none !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em !important;
+  transition:
+    color 0.22s ease,
+    background-color 0.22s ease,
+    transform 0.22s ease,
+    box-shadow 0.22s ease !important;
+}
+
+/* Soft hover plate */
+@media (hover: hover) {
+  .super-navbar .super-navbar__item:hover,
+  .super-navbar .super-navbar__item a:hover,
+  .super-navbar .super-navbar__menu a:not(.super-navbar__button):hover,
+  .super-navbar .super-navbar__nav a:not(.super-navbar__button):hover {
+    color: #fffaf3 !important;
+    background: rgba(236, 221, 190, 0.06) !important;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset !important;
+    transform: translateY(-1px) !important;
+  }
+}
+
+/* Center-out underline */
+.super-navbar .super-navbar__item::after,
+.super-navbar .super-navbar__item a::after,
+.super-navbar .super-navbar__menu a:not(.super-navbar__button)::after,
+.super-navbar .super-navbar__nav a:not(.super-navbar__button)::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  width: 0;
+  height: 1.5px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(235, 220, 190, 0.15) 0%,
+    rgba(245, 236, 220, 0.95) 50%,
+    rgba(235, 220, 190, 0.15) 100%
+  );
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: width 0.24s ease, opacity 0.24s ease;
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .super-navbar .super-navbar__item:hover::after,
+  .super-navbar .super-navbar__item a:hover::after,
+  .super-navbar .super-navbar__menu a:not(.super-navbar__button):hover::after,
+  .super-navbar .super-navbar__nav a:not(.super-navbar__button):hover::after {
+    width: calc(100% - 18px);
+    opacity: 1;
+  }
+}
+
+/* Active link support */
+.super-navbar a[aria-current="page"],
+.super-navbar .is-active,
+.super-navbar .active {
+  color: #fffaf3 !important;
+  background: rgba(236, 221, 190, 0.05) !important;
+}
+
+/* =========================================
+   CTA BUTTON (champagne pill + subtle glow ring + sheen)
+   ========================================= */
+.super-navbar .super-navbar__cta,
+.super-navbar .super-navbar__cta a,
+.super-navbar a.super-navbar__button:not(.super-navbar__menu-open) {
+  position: relative !important;
+  overflow: hidden !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 42px !important;
+  padding: 10px 18px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(255, 248, 232, 0.62) !important;
+  background:
+    linear-gradient(180deg, rgba(238, 226, 202, 0.98) 0%, rgba(226, 209, 178, 0.98) 100%) !important;
+  color: #2c2119 !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+  text-decoration: none !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.62) inset,
+    0 8px 18px rgba(0, 0, 0, 0.18),
+    0 0 0 0 rgba(235, 220, 190, 0) !important;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease !important;
+  z-index: 0;
+}
+
+/* Sheen layer */
+.super-navbar .super-navbar__cta::before,
+.super-navbar .super-navbar__cta a::before,
+.super-navbar a.super-navbar__button:not(.super-navbar__menu-open)::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: -55%;
+  width: 40%;
+  height: 140%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.30) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(14deg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Hover polish */
+@media (hover: hover) {
+  .super-navbar .super-navbar__cta:hover,
+  .super-navbar .super-navbar__cta a:hover,
+  .super-navbar a.super-navbar__button:not(.super-navbar__menu-open):hover {
+    transform: translateY(-1px) !important;
+    border-color: rgba(255, 248, 232, 0.85) !important;
+    background:
+      linear-gradient(180deg, rgba(245, 237, 222, 1) 0%, rgba(233, 219, 194, 1) 100%) !important;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.70) inset,
+      0 12px 22px rgba(0, 0, 0, 0.22),
+      0 0 0 4px rgba(235, 220, 190, 0.10) !important;
+  }
+
+  .super-navbar .super-navbar__cta:hover::before,
+  .super-navbar .super-navbar__cta a:hover::before,
+  .super-navbar a.super-navbar__button:not(.super-navbar__menu-open):hover::before {
+    opacity: 1;
+    animation: superNavSheen 850ms ease forwards;
+  }
+}
+
+@keyframes superNavSheen {
+  0% {
+    left: -55%;
+  }
+  100% {
+    left: 125%;
+  }
+}
+
+/* =========================================
+   HAMBURGER BUTTON (provided class)
+   Styled as luxury companion to CTA
+   ========================================= */
+/* =========================================
+   HAMBURGER BUTTON (provided class)
+   Hidden on desktop, shown on tablet/mobile
+   ========================================= */
+.super-navbar__button.super-navbar__menu-open {
+  position: relative !important;
+  display: none !important; /* hidden on desktop */
+  align-items: center !important;
+  justify-content: center !important;
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 12px !important;
+  color: #f3e8d4 !important;
+  border: 1px solid rgba(235, 220, 190, 0.18) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025) 0%, rgba(255, 255, 255, 0.01) 100%),
+    rgba(235, 220, 190, 0.04) !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.035) inset,
+    0 8px 16px rgba(0, 0, 0, 0.16) !important;
+  transition:
+    transform 0.22s ease,
+    background 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease !important;
+}
+
+/* Animate line spacing slightly on hover (desktop/tablet hover devices) */
+.super-navbar__button.super-navbar__menu-open svg line {
+  transition: transform 0.22s ease, opacity 0.22s ease !important;
+  transform-origin: center !important;
+}
+
+@media (hover: hover) {
+  .super-navbar__button.super-navbar__menu-open:hover {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.015) 100%),
+      rgba(235, 220, 190, 0.09) !important;
+    border-color: rgba(235, 220, 190, 0.30) !important;
+    transform: translateY(-1px) !important;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.04) inset,
+      0 10px 18px rgba(0, 0, 0, 0.20),
+      0 0 0 3px rgba(235, 220, 190, 0.07) !important;
+  }
+
+  .super-navbar__button.super-navbar__menu-open:hover svg line:nth-child(1) {
+    transform: translateY(0.8px);
+  }
+
+  .super-navbar__button.super-navbar__menu-open:hover svg line:nth-child(3) {
+    transform: translateY(-0.8px);
+  }
+}
+
+/* =========================================
+   FOCUS STATES
+   ========================================= */
+.super-navbar a:focus-visible,
+.super-navbar button:focus-visible,
+.super-navbar__button.super-navbar__menu-open:focus-visible {
+  outline: none !important;
+  box-shadow:
+    0 0 0 3px rgba(235, 220, 190, 0.20),
+    0 0 0 1px rgba(255, 248, 232, 0.28) inset !important;
+}
+
+/* =========================================
+   TABLET (CTA + hamburger pairing beside each other)
+   ========================================= */
+@media (max-width: 1024px) {
+  .super-navbar__content,
+  .super-navbar .super-navbar__inner,
+  .super-navbar .super-navbar__wrapper {
+    min-height: 72px !important;
+  }
+
+  /* Make CTA and hamburger feel like one control group */
+  .super-navbar .super-navbar__cta,
+  .super-navbar .super-navbar__cta a,
+  .super-navbar a.super-navbar__button:not(.super-navbar__menu-open) {
+    min-height: 40px !important;
+    padding: 9px 14px !important;
+    border-radius: 12px !important;
+    font-size: 14px !important;
+  }
+
+  .super-navbar__button.super-navbar__menu-open {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 12px !important;
+  }
+
+  /* Style common mobile/tablet menu panel wrappers (when opened by Super) */
+  .super-navbar .super-navbar__menu,
+  .super-navbar .super-navbar__mobile-menu,
+  .super-navbar .super-navbar__nav {
+    border-radius: 16px !important;
+  }
+  
+  @media (max-width: 1024px) {
+  /* ...your existing styles... */
+
+  .super-navbar__button.super-navbar__menu-open {
+    display: inline-flex !important; /* show on tablet/mobile */
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 12px !important;
+  }
+}
+}
+
+/* =========================================
+   MOBILE (compact top row, premium dropdown panel)
+   Hamburger remains beside CTA
+   ========================================= */
+@media (max-width: 767px) {
+  .super-navbar {
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.025) inset,
+      0 8px 20px rgba(0, 0, 0, 0.18) !important;
+  }
+
+  .super-navbar__content,
+  .super-navbar .super-navbar__inner,
+  .super-navbar .super-navbar__wrapper {
+    min-height: 68px !important;
+  }
+
+  /* Compact CTA */
+  .super-navbar .super-navbar__cta,
+  .super-navbar .super-navbar__cta a,
+  .super-navbar a.super-navbar__button:not(.super-navbar__menu-open) {
+    min-height: 38px !important;
+    padding: 8px 12px !important;
+    border-radius: 11px !important;
+    font-size: 13px !important;
+  }
+
+  .super-navbar__button.super-navbar__menu-open {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 11px !important;
+  }
+
+  /* Premium dropdown / slide-down panel styling for common Super menu containers */
+  .super-navbar .super-navbar__menu,
+  .super-navbar .super-navbar__mobile-menu,
+  .super-navbar .super-navbar__nav {
+    margin-top: 10px !important;
+    padding: 10px !important;
+    background:
+      linear-gradient(180deg, rgba(20, 14, 12, 0.95) 0%, rgba(17, 12, 10, 0.97) 100%) !important;
+    border: 1px solid rgba(235, 220, 190, 0.10) !important;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.03) inset,
+      0 16px 30px rgba(0, 0, 0, 0.24) !important;
+    backdrop-filter: blur(12px) saturate(120%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(120%) !important;
+  }
+
+  /* Mobile menu links: larger tap targets */
+  .super-navbar .super-navbar__menu a:not(.super-navbar__button),
+  .super-navbar .super-navbar__nav a:not(.super-navbar__button),
+  .super-navbar .super-navbar__item,
+  .super-navbar .super-navbar__item a {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    min-height: 44px !important;
+    padding: 10px 12px !important;
+    border-radius: 10px !important;
+    font-size: 14px !important;
+  }
+
+  /* Underline turns into left accent line in mobile panel */
+  .super-navbar .super-navbar__menu a:not(.super-navbar__button)::after,
+  .super-navbar .super-navbar__nav a:not(.super-navbar__button)::after,
+  .super-navbar .super-navbar__item::after,
+  .super-navbar .super-navbar__item a::after {
+    left: 10px !important;
+    bottom: 50% !important;
+    width: 2px !important;
+    height: 0 !important;
+    transform: translateY(50%) !important;
+    opacity: 0 !important;
+    background: rgba(245, 236, 220, 0.9) !important;
+    transition: height 0.22s ease, opacity 0.22s ease !important;
+  }
+
+  @media (hover: hover) {
+    .super-navbar .super-navbar__menu a:not(.super-navbar__button):hover::after,
+    .super-navbar .super-navbar__nav a:not(.super-navbar__button):hover::after,
+    .super-navbar .super-navbar__item:hover::after,
+    .super-navbar .super-navbar__item a:hover::after {
+      height: 18px !important;
+      opacity: 1 !important;
+    }
+  }
+}
+
+/* =========================================
+   REDUCED MOTION
+   ========================================= */
+@media (prefers-reduced-motion: reduce) {
+  .super-navbar *,
+  .super-navbar *::before,
+  .super-navbar *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* =========================================
+   APPEND PATCH — Keep hamburger visible for MINIMAL navbar
+   (desktop + tablet + mobile)
+   ========================================= */
+
+/* Force hamburger to show on all screen sizes for minimal navbar */
+.super-navbar.minimal .super-navbar__button.super-navbar__menu-open {
+  display: inline-flex !important;
+}
+
+/* Optional polish: keep CTA + hamburger aligned nicely */
+.super-navbar.minimal .super-navbar__actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+/* Optional: preserve compact sizing across breakpoints */
+.super-navbar.minimal .super-navbar__button.super-navbar__menu-open {
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 12px !important;
+}
+
+@media (max-width: 1024px) {
+  .super-navbar.minimal .super-navbar__button.super-navbar__menu-open {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 12px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .super-navbar.minimal .super-navbar__button.super-navbar__menu-open {
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 11px !important;
+  }
+
+  .super-navbar.minimal .super-navbar__actions {
+    gap: 8px !important;
+  }
+}
