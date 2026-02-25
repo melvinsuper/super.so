@@ -2627,3 +2627,8 @@ html, body,
     gap: 8px !important;
   }
 }
+
+.notion-form__wrapper.as-embed {
+   
+    border: none !important;
+}
