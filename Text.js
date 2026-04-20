@@ -1,4 +1,3 @@
-<script>
 (() => {
   const SELECTOR = "h2.notion-heading, .notion-text, .notion-header__title";
 
@@ -131,4 +130,3 @@
     init();
   }
 })();
-</script>
