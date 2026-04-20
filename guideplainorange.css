@@ -1,0 +1,508 @@
+/* =========================================================
+   HIDDEN TOGGLES
+   Hide brown-background toggle blocks
+   ========================================================= */
+.notion-toggle.bg-brown {
+  display: none !important;
+}
+
+/* =========================================================
+   GLOBAL BACKGROUND
+   Light mode base background image + overlays
+   ========================================================= */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: url("https://cdn.jsdelivr.net/gh/melvinsuper/melvinimage@main/Modern8.svg") center center / cover no-repeat;
+  opacity: 0.66;
+  filter: saturate(100%) contrast(100%) brightness(0.98);
+  pointer-events: none;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(248, 241, 233, 0.46) 0%,
+      rgba(249, 243, 236, 0.52) 100%
+    ),
+    radial-gradient(
+      circle at 14% 10%,
+      rgba(255, 136, 30, 0.065) 0%,
+      rgba(255, 136, 30, 0.034) 16%,
+      rgba(255, 136, 30, 0) 34%
+    ),
+    radial-gradient(
+      circle at 88% 82%,
+      rgba(255, 120, 20, 0.058) 0%,
+      rgba(255, 120, 20, 0.028) 14%,
+      rgba(255, 120, 20, 0) 30%
+    );
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  body::before {
+    background-position: center top;
+    background-size: cover;
+    opacity: 0.58;
+    filter: saturate(96%) contrast(99%) brightness(0.98);
+  }
+
+  body::after {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(248, 241, 233, 0.58) 0%,
+        rgba(249, 243, 236, 0.64) 100%
+      ),
+      radial-gradient(
+        circle at 14% 10%,
+        rgba(255, 136, 30, 0.052) 0%,
+        rgba(255, 136, 30, 0.026) 16%,
+        rgba(255, 136, 30, 0) 34%
+      ),
+      radial-gradient(
+        circle at 88% 82%,
+        rgba(255, 120, 20, 0.045) 0%,
+        rgba(255, 120, 20, 0.022) 14%,
+        rgba(255, 120, 20, 0) 30%
+      );
+  }
+}
+
+/* =========================================================
+   DARK MODE BACKGROUND
+   Dark theme image treatment + overlays
+   ========================================================= */
+html.theme-dark body::before {
+  background: url("https://cdn.jsdelivr.net/gh/melvinsuper/melvinimage@main/Modern8.svg") center center / cover no-repeat;
+  opacity: 0.8;
+  filter: saturate(108%) contrast(102%) brightness(1.2);
+}
+
+html.theme-dark body::after {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(24, 20, 16, 0.07) 0%,
+      rgba(18, 15, 12, 0.11) 100%
+    ),
+    radial-gradient(
+      circle at 14% 10%,
+      rgba(255, 136, 30, 0.12) 0%,
+      rgba(255, 136, 30, 0.06) 18%,
+      rgba(255, 136, 30, 0.02) 28%,
+      rgba(255, 136, 30, 0) 40%
+    ),
+    radial-gradient(
+      circle at 88% 82%,
+      rgba(255, 120, 20, 0.09) 0%,
+      rgba(255, 120, 20, 0.045) 16%,
+      rgba(255, 120, 20, 0.015) 26%,
+      rgba(255, 120, 20, 0) 36%
+    ),
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(255, 255, 255, 0.04) 0%,
+      rgba(255, 255, 255, 0.018) 24%,
+      rgba(255, 255, 255, 0) 46%
+    );
+}
+
+/* =========================================================
+   MEDIUM GALLERY
+   Premium hover cards with visible title
+   Lighter image treatment
+   ========================================================= */
+.notion-collection-gallery.medium {
+  gap: 15px !important;
+}
+
+/* Card shell */
+.notion-collection-gallery.medium .notion-collection-card {
+  position: relative !important;
+  display: block !important;
+  overflow: hidden !important;
+  min-height: 420px !important;
+  border-radius: 24px !important;
+  border: 1px solid rgba(140, 82, 33, 0.14) !important;
+  background: #f7ede3 !important;
+  box-shadow:
+    0 14px 36px rgba(99, 52, 18, 0.10),
+    0 4px 14px rgba(99, 52, 18, 0.06) !important;
+  transition:
+    transform 0.38s ease,
+    box-shadow 0.38s ease,
+    border-color 0.38s ease !important;
+}
+
+/* Hover card lift */
+.notion-collection-gallery.medium .notion-collection-card:hover {
+  transform: translateY(-10px) scale(1.01) !important;
+  border-color: rgba(217, 106, 11, 0.30) !important;
+  box-shadow:
+    0 24px 54px rgba(99, 52, 18, 0.16),
+    0 8px 20px rgba(99, 52, 18, 0.10) !important;
+}
+
+/* Cover area */
+.notion-collection-gallery.medium .notion-collection-card__cover,
+.notion-collection-gallery.medium .notion-collection-card-cover {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+}
+
+/* Image */
+.notion-collection-gallery.medium .notion-collection-card__cover img,
+.notion-collection-gallery.medium .notion-collection-card-cover img,
+.notion-collection-gallery.medium .notion-collection-card img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  filter: saturate(0.95) contrast(1.02) brightness(1) !important;
+  transition:
+    transform 0.7s ease,
+    filter 0.4s ease !important;
+}
+
+/* Hover image effect */
+.notion-collection-gallery.medium .notion-collection-card:hover img,
+.notion-collection-gallery.medium .notion-collection-card:hover .notion-collection-card__cover img,
+.notion-collection-gallery.medium .notion-collection-card:hover .notion-collection-card-cover img {
+  transform: scale(1.07) !important;
+  filter: blur(6px) saturate(1) contrast(1.05) brightness(0.55) !important;
+}
+
+/* Overlay */
+.notion-collection-gallery.medium .notion-collection-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(24, 14, 8, 0.05) 0%,
+      rgba(24, 14, 8, 0.12) 42%,
+      rgba(24, 14, 8, 0.42) 100%
+    );
+  transition: background 0.38s ease !important;
+}
+
+/* Hover overlay */
+.notion-collection-gallery.medium .notion-collection-card:hover::before {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(10, 8, 7, 0.20) 0%,
+      rgba(10, 8, 7, 0.30) 42%,
+      rgba(10, 8, 7, 0.58) 100%
+    );
+}
+
+/* Content layer */
+.notion-collection-gallery.medium .notion-collection-card__content,
+.notion-collection-gallery.medium .notion-collection-card-content {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  display: block !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+}
+
+/* Hide non-title properties */
+.notion-collection-gallery.medium .notion-collection-card__property-list > *:not(.notion-property__title),
+.notion-collection-gallery.medium .notion-collection-card-property-list > *:not(.notion-property-title) {
+  display: none !important;
+}
+
+/* Hide title layer by default */
+.notion-collection-gallery.medium .notion-property__title,
+.notion-collection-gallery.medium .notion-property-title {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 3 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease !important;
+}
+
+/* Show title on hover */
+.notion-collection-gallery.medium .notion-collection-card:hover .notion-property__title,
+.notion-collection-gallery.medium .notion-collection-card:hover .notion-property-title {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Force title and inner text to white */
+.notion-collection-gallery.medium .notion-property__title,
+.notion-collection-gallery.medium .notion-property__title *,
+.notion-collection-gallery.medium .notion-property-title,
+.notion-collection-gallery.medium .notion-property-title *,
+.notion-collection-gallery.medium .notion-property__title__text,
+.notion-collection-gallery.medium .notion-property__title .notion-semantic-string,
+.notion-collection-gallery.medium .notion-property-title .notion-semantic-string,
+.notion-collection-gallery.medium .notion-property__title a,
+.notion-collection-gallery.medium .notion-property-title a,
+.notion-collection-gallery.medium .notion-property__title span,
+.notion-collection-gallery.medium .notion-property-title span {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-decoration: none !important;
+  font-size: 23px !important;
+}
+
+/* Title styling */
+.notion-collection-gallery.medium .notion-property__title__text,
+.notion-collection-gallery.medium .notion-property__title .notion-semantic-string,
+.notion-collection-gallery.medium .notion-property-title .notion-semantic-string,
+.notion-collection-gallery.medium .notion-property__title a,
+.notion-collection-gallery.medium .notion-property-title a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  max-width: 84% !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  background: transparent !important;
+  font-size: 32px !important;
+  line-height: 1.05 !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  text-align: center !important;
+  text-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.90),
+    0 10px 24px rgba(0, 0, 0, 0.75),
+    0 0 18px rgba(255, 255, 255, 0.12) !important;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.55)) !important;
+  transform: translateY(12px) scale(0.96) !important;
+  transition: transform 0.35s ease !important;
+}
+
+/* Title hover animation */
+.notion-collection-gallery.medium .notion-collection-card:hover .notion-property__title__text,
+.notion-collection-gallery.medium .notion-collection-card:hover .notion-property__title .notion-semantic-string,
+.notion-collection-gallery.medium .notion-collection-card:hover .notion-property-title .notion-semantic-string,
+.notion-collection-gallery.medium .notion-collection-card:hover .notion-property__title a,
+.notion-collection-gallery.medium .notion-collection-card:hover .notion-property-title a {
+  transform: translateY(0) scale(1) !important;
+}
+
+@media (max-width: 768px) {
+  .notion-collection-gallery.medium {
+    gap: 18px !important;
+  }
+
+  .notion-collection-gallery.medium .notion-collection-card {
+    min-height: 300px !important;
+    border-radius: 18px !important;
+  }
+
+  .notion-collection-gallery.medium .notion-property__title__text,
+  .notion-collection-gallery.medium .notion-property__title .notion-semantic-string,
+  .notion-collection-gallery.medium .notion-property-title .notion-semantic-string,
+  .notion-collection-gallery.medium .notion-property__title a,
+  .notion-collection-gallery.medium .notion-property-title a {
+    font-size: 23px !important;
+    max-width: 88% !important;
+  }
+}
+
+@media (min-width: 1500px) {
+  .notion-collection-gallery.medium {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    justify-content: center !important;
+    align-items: start !important;
+    gap: 15px !important;
+    width: 100% !important;
+    max-width: 1180px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .notion-collection-gallery.medium .notion-collection-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+}
+
+/* =========================================================
+   SIDEBAR ICONS
+   Sidebar icon color treatment and states
+   ========================================================= */
+.super-navigation-menu__item svg {
+  color: #C96A1A !important;
+  opacity: 0.95;
+  transition: color 0.25s ease, transform 0.25s ease, opacity 0.25s ease;
+}
+
+.super-navigation-menu__item svg * {
+  stroke: currentColor !important;
+}
+
+.super-navigation-menu__item svg [fill]:not([fill="none"]) {
+  fill: currentColor !important;
+}
+
+.super-navigation-menu__item:hover svg,
+.super-navigation-menu__item:focus-within svg,
+.super-navigation-menu__item[aria-current="page"] svg,
+.super-navigation-menu__item.active svg,
+.super-navigation-menu__item--active svg {
+  color: #EB6716 !important;
+  opacity: 1;
+  transform: scale(1.06);
+}
+
+@media (max-width: 768px) {
+  .super-navigation-menu__item svg {
+    color: #D97824 !important;
+  }
+}
+
+/* =========================================================
+   TOP NAV ICONS
+   Navbar icon color
+   ========================================================= */
+.super-navbar__content .super-navbar__item svg,
+.super-navbar__content .super-navbar__item-list > li svg {
+  color: #D97824 !important;
+}
+
+/* =========================================================
+   ORANGE CALLOUT
+   Premium orange callout styling
+   ========================================================= */
+.notion-callout.bg-orange-light.border {
+  padding: 30px 28px !important;
+  background: linear-gradient(
+    135deg,
+    rgba(246, 232, 214, 0.88) 0%,
+    rgba(242, 224, 203, 0.82) 100%
+  ) !important;
+  border: 1px solid rgba(217, 120, 36, 0.12) !important;
+  border-radius: 28px !important;
+  box-shadow:
+    0 10px 30px rgba(31, 26, 23, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Callout text */
+.notion-callout.bg-orange-light.border .notion-callout__content,
+.notion-callout.bg-orange-light.border .notion-text,
+.notion-callout.bg-orange-light.border p {
+  color: #2B231F !important;
+}
+
+@media (max-width: 768px) {
+  .notion-callout.bg-orange-light.border {
+    padding: 22px 18px !important;
+    border-radius: 20px !important;
+  }
+}
+
+/* =========================================================
+   TYPEFORM
+   Small-screen containment and overflow control
+   ========================================================= */
+@media screen and (min-width: 200px) and (max-width: 380px) {
+  .guideplain-typeform-wrap {
+    max-width: 100%;
+    margin: 24px auto;
+    padding: 0 14px;
+    overflow: hidden !important;
+  }
+
+  .guideplain-typeform-frame {
+    min-height: 560px !important;
+    overflow: hidden !important;
+  }
+
+  .guideplain-typeform-frame > div {
+    min-height: 560px !important;
+    overflow: hidden !important;
+  }
+
+  .guideplain-typeform-frame iframe {
+    display: block !important;
+    width: 100% !important;
+    min-height: 560px !important;
+    overflow: hidden !important;
+  }
+}
+
+/* =========================================================
+   DARK MODE BUTTONS
+   Match button background and text colors
+   ========================================================= */
+html.theme-dark .notion-button__content.bg-gray-light {
+  background: #3a3a3a !important;
+  color: #ffffff !important;
+}
+
+html.theme-dark .notion-button__content.bg-brown-light {
+  background: #4a3b35 !important;
+  color: #ffffff !important;
+}
+
+html.theme-dark .notion-button__content.bg-orange-light {
+  background: #5a3b1f !important;
+  color: #ffffff !important;
+}
+
+html.theme-dark .notion-button__content.bg-yellow-light {
+  background: #5a4b24 !important;
+  color: #ffffff !important;
+}
+
+html.theme-dark .notion-button__content.bg-green-light {
+  background: #25463b !important;
+  color: #ffffff !important;
+}
+
+html.theme-dark .notion-button__content.bg-blue-light {
+  background: #213f52 !important;
+  color: #ffffff !important;
+}
+
+html.theme-dark .notion-button__content.bg-purple-light {
+  background: #433652 !important;
+  color: #ffffff !important;
+}
+
+html.theme-dark .notion-button__content.bg-pink-light {
+  background: #523547 !important;
+  color: #ffffff !important;
+}
+
+html.theme-dark .notion-button__content.bg-red-light {
+  background: #5a2f2f !important;
+  color: #ffffff !important;
+}
