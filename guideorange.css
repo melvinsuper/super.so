@@ -462,6 +462,12 @@ html.theme-dark body::after {
    DARK MODE BUTTONS
    Match button background and text colors
    ========================================================= */
+ .notion-button__content {
+    min-height: 56px !important;
+    padding: 16px 18px !important;
+    font-size: 14px !important;
+  }
+
 html.theme-dark .notion-button__content.bg-gray-light {
   background: #3a3a3a !important;
   color: #ffffff !important;
@@ -507,8 +513,4 @@ html.theme-dark .notion-button__content.bg-red-light {
   color: #ffffff !important;
 }
 
- .notion-button__content {
-    min-height: 56px !important;
-    padding: 16px 18px !important;
-    font-size: 14px !important;
-  }
+
