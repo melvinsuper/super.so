@@ -506,3 +506,9 @@ html.theme-dark .notion-button__content.bg-red-light {
   background: #5a2f2f !important;
   color: #ffffff !important;
 }
+
+ .notion-button__content {
+    min-height: 56px !important;
+    padding: 16px 18px !important;
+    font-size: 14px !important;
+  }
