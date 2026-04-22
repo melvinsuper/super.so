@@ -335,19 +335,22 @@ html.theme-dark body::after {
   .notion-collection-gallery.medium {
     display: grid !important;
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    justify-content: center !important;
-    align-items: start !important;
-    gap: 15px !important;
-    width: 100% !important;
-    max-width: 1180px !important;
-    margin-left: auto !important;
+    gap: 24px !important;
+    width: min(100%, 1320px) !important;
+    max-width: 1320px !important;
+    margin-left: 0 !important;
     margin-right: auto !important;
+    justify-content: start !important;
+    align-items: stretch !important;
   }
 
   .notion-collection-gallery.medium .notion-collection-card {
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 !important;
+    min-height: unset !important;
+    aspect-ratio: 4 / 5 !important;
+    height: auto !important;
   }
 }
 
@@ -428,6 +431,16 @@ html.theme-dark body::after {
   }
 }
 
+@media (min-width: 1500px) {
+  .notion-callout.bg-orange-light.border {
+    width: min(100%, 1330px) !important;
+    max-width: 1700px !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
+  }
+}
+
 /* =========================================================
    TYPEFORM
    Small-screen containment and overflow control
@@ -455,6 +468,30 @@ html.theme-dark body::after {
     width: 100% !important;
     min-height: 560px !important;
     overflow: hidden !important;
+  }
+}
+
+@media (min-width: 1500px) {
+  iframe[src*="typeform.com"],
+  iframe[src*="form.typeform.com"] {
+    display: block !important;
+    width: min(100%, 1330px) !important;
+    max-width: 1330px !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
+    
+  }
+
+  .notion-embed:has(iframe[src*="typeform.com"]),
+  .notion-embed:has(iframe[src*="form.typeform.com"]),
+  .notion-embed__content:has(iframe[src*="typeform.com"]),
+  .notion-embed__content:has(iframe[src*="form.typeform.com"]) {
+    width: min(100%, 1330px) !important;
+    max-width: 1330px !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
   }
 }
 
