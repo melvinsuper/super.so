@@ -552,4 +552,8 @@ html.theme-dark .notion-button__content.bg-red-light {
   color: #ffffff !important;
 }
 
-
+/*************Footer icon**********************/
+.super-footer__icons .notion-link {
+  color: #e97a1f !important;
+  
+}
