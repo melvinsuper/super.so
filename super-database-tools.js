@@ -1,10 +1,28 @@
 (() => {
   const DB_SELECTOR = ".notion-collection-table";
   const READY_KEY = "superDbToolsReady";
+  const HIDDEN_ROW_CLASS = "super-db-row-hidden";
 
-  const tableState = new WeakMap();
+  const SELECTORS = {
+    rows: [
+      "tbody tr",
+      ".notion-collection-table__body .notion-collection-table__row",
+      ".notion-collection-table__row",
+      "[role='row']"
+    ],
+    headers: [
+      "thead th",
+      ".notion-collection-table__head-cell",
+      ".notion-collection-table__header-cell",
+      "[role='columnheader']"
+    ],
+    cells: "td, .notion-collection-table__cell, [role='cell'], [class*='collection-table__cell']",
+    checkboxState: "input[type='checkbox'], [role='checkbox'], [aria-checked], [data-checked], [data-state]",
+    checkboxSvgShapes: "svg rect, svg path",
+    checkmarkSvgShapes: "svg polyline, svg path"
+  };
 
-  const icons = {
+  const ICONS = {
     filter: `
       <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
         <path d="M4 6h16M7 12h10M10 18h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -22,8 +40,10 @@
     `
   };
 
+  const tableState = new WeakMap();
+
   function initAllTables() {
-    injectHighlightStyles();
+    injectBaseStyles();
     document.querySelectorAll(DB_SELECTOR).forEach(initTable);
   }
 
@@ -46,6 +66,7 @@
       search: "",
       filterColumn: "all",
       filterText: "",
+      filterMode: "text",
       sortColumn: "none",
       sortDirection: "asc",
       headers,
@@ -59,13 +80,14 @@
 
       if (target.matches("[data-super-db-search]")) {
         state.search = target.value.trim().toLowerCase();
+        updateTable(table);
+        return;
       }
 
       if (target.matches("[data-super-db-filter-text]")) {
         state.filterText = target.value.trim().toLowerCase();
+        updateTable(table);
       }
-
-      updateTable(table);
     });
 
     toolbar.addEventListener("change", event => {
@@ -73,13 +95,30 @@
 
       if (target.matches("[data-super-db-filter-column]")) {
         state.filterColumn = target.value;
+        state.filterText = "";
+
+        clearFilterInputs(toolbar);
+        revealRows(table);
+        syncFilterControl(table);
+        updateTable(table);
+
+        return;
+      }
+
+      if (target.matches("[data-super-db-filter-boolean]")) {
+        state.filterText = target.value;
+
+        revealRows(table);
+        updateTable(table);
+
+        return;
       }
 
       if (target.matches("[data-super-db-sort-column]")) {
         state.sortColumn = target.value;
+        revealRows(table);
+        updateTable(table);
       }
-
-      updateTable(table);
     });
 
     toolbar.addEventListener("click", event => {
@@ -95,7 +134,10 @@
       if (directionButton) {
         state.sortDirection = state.sortDirection === "asc" ? "desc" : "asc";
         directionButton.textContent = state.sortDirection === "asc" ? "Ascending" : "Descending";
+
+        revealRows(table);
         updateTable(table);
+
         return;
       }
 
@@ -104,6 +146,7 @@
       }
     });
 
+    syncFilterControl(table);
     updateTable(table);
   }
 
@@ -126,15 +169,15 @@
         <span class="super-db-tools__count" data-super-db-count></span>
 
         <button type="button" class="super-db-tools__icon" data-super-db-panel="filter" aria-label="Filter">
-          ${icons.filter}
+          ${ICONS.filter}
         </button>
 
         <button type="button" class="super-db-tools__icon" data-super-db-panel="sort" aria-label="Sort">
-          ${icons.sort}
+          ${ICONS.sort}
         </button>
 
         <button type="button" class="super-db-tools__icon" data-super-db-panel="search" aria-label="Search">
-          ${icons.search}
+          ${ICONS.search}
         </button>
 
         <button type="button" class="super-db-tools__clear" data-super-db-clear>
@@ -150,9 +193,18 @@
           </select>
         </label>
 
-        <label>
+        <label data-super-db-filter-text-wrap>
           Contains
           <input type="text" data-super-db-filter-text placeholder="Type filter text or empty">
+        </label>
+
+        <label data-super-db-filter-boolean-wrap hidden>
+          Value
+          <select data-super-db-filter-boolean disabled>
+            <option value="">Any</option>
+            <option value="checked">Checked</option>
+            <option value="unchecked">Unchecked</option>
+          </select>
         </label>
       </div>
 
@@ -188,33 +240,33 @@
     if (!rows.length) return;
 
     rows.forEach(clearSearchHighlights);
+    rows.forEach(row => row.classList.remove(HIDDEN_ROW_CLASS));
 
     setOriginalIndexes(rows);
-    sortRows(rows, state);
+    sortRows(table, rows, state);
 
     let visibleCount = 0;
 
     rows.forEach(row => {
-      const rowText = getText(row).toLowerCase();
-
       const matchesSearch = matchesSmartSearch(row, state.search);
-
       let matchesFilter = true;
 
       if (state.filterText) {
         if (state.filterColumn === "all") {
-          matchesFilter = isEmptyKeyword(state.filterText)
-            ? rowHasEmptyCell(row)
-            : rowText.includes(state.filterText);
+          matchesFilter = rowMatchesSmartFilter(row, state.filterText);
         } else {
-          const cellText = getCellText(row, Number(state.filterColumn));
-          matchesFilter = matchesSmartFilter(cellText, state.filterText);
+          const columnIndex = Number(state.filterColumn);
+          const cell = getCell(row, columnIndex);
+
+          matchesFilter = isCheckboxColumn(table, columnIndex)
+            ? matchesCheckboxFilter(cell, state.filterText)
+            : matchesSmartFilter(cell, state.filterText);
         }
       }
 
       const shouldShow = matchesSearch && matchesFilter;
 
-      row.classList.toggle("super-db-row-hidden", !shouldShow);
+      row.classList.toggle(HIDDEN_ROW_CLASS, !shouldShow);
 
       if (shouldShow) {
         visibleCount += 1;
@@ -229,22 +281,85 @@
     }
   }
 
-  function sortRows(rows, state) {
+  function syncFilterControl(table) {
+    const state = tableState.get(table);
+    if (!state) return;
+
+    const textWrap = state.toolbar.querySelector("[data-super-db-filter-text-wrap]");
+    const booleanWrap = state.toolbar.querySelector("[data-super-db-filter-boolean-wrap]");
+    const textInput = state.toolbar.querySelector("[data-super-db-filter-text]");
+    const booleanSelect = state.toolbar.querySelector("[data-super-db-filter-boolean]");
+
+    if (!textWrap || !booleanWrap || !textInput || !booleanSelect) return;
+
+    const columnIndex = Number(state.filterColumn);
+    const isBooleanColumn =
+      state.filterColumn !== "all" && isCheckboxColumn(table, columnIndex);
+
+    if (isBooleanColumn) {
+      state.filterMode = "checkbox";
+
+      textWrap.hidden = true;
+      textWrap.style.display = "none";
+      textInput.disabled = true;
+      textInput.value = "";
+
+      booleanWrap.hidden = false;
+      booleanWrap.style.display = "";
+      booleanSelect.disabled = false;
+      booleanSelect.value = normalizeCheckboxFilterValue(state.filterText);
+
+      return;
+    }
+
+    state.filterMode = "text";
+
+    textWrap.hidden = false;
+    textWrap.style.display = "";
+    textInput.disabled = false;
+
+    booleanWrap.hidden = true;
+    booleanWrap.style.display = "none";
+    booleanSelect.disabled = true;
+    booleanSelect.value = "";
+  }
+
+  function sortRows(table, rows, state) {
     const parent = rows[0]?.parentElement;
     if (!parent) return;
 
     const sortedRows = [...rows].sort((a, b) => {
+      const originalOrder =
+        Number(a.dataset.superOriginalIndex) - Number(b.dataset.superOriginalIndex);
+
       if (state.sortColumn === "none") {
-        return Number(a.dataset.superOriginalIndex) - Number(b.dataset.superOriginalIndex);
+        return originalOrder;
       }
 
       const columnIndex = Number(state.sortColumn);
+
+      if (isCheckboxColumn(table, columnIndex)) {
+        const aState = readCheckboxState(getCell(a, columnIndex));
+        const bState = readCheckboxState(getCell(b, columnIndex));
+
+        const checkboxResult = compareCheckboxValues(aState, bState);
+
+        if (checkboxResult !== 0) {
+          return state.sortDirection === "asc" ? checkboxResult : -checkboxResult;
+        }
+
+        return originalOrder;
+      }
+
       const aValue = getCellText(a, columnIndex);
       const bValue = getCellText(b, columnIndex);
-
       const result = compareValues(aValue, bValue);
 
-      return state.sortDirection === "asc" ? result : -result;
+      if (result !== 0) {
+        return state.sortDirection === "asc" ? result : -result;
+      }
+
+      return originalOrder;
     });
 
     const insertBeforeNode = getInsertBeforeNode(parent, rows);
@@ -261,6 +376,7 @@
     state.search = "";
     state.filterColumn = "all";
     state.filterText = "";
+    state.filterMode = "text";
     state.sortColumn = "none";
     state.sortDirection = "asc";
 
@@ -276,6 +392,10 @@
     if (sortColumn) sortColumn.value = "none";
     if (sortDirection) sortDirection.textContent = "Ascending";
 
+    clearFilterInputs(state.toolbar);
+    revealRows(table);
+    syncFilterControl(table);
+
     state.toolbar.querySelectorAll("[data-super-db-panel-content]").forEach(panel => {
       panel.hidden = true;
     });
@@ -285,6 +405,20 @@
     });
 
     updateTable(table);
+  }
+
+  function clearFilterInputs(toolbar) {
+    const textInput = toolbar.querySelector("[data-super-db-filter-text]");
+    const booleanSelect = toolbar.querySelector("[data-super-db-filter-boolean]");
+
+    if (textInput) textInput.value = "";
+    if (booleanSelect) booleanSelect.value = "";
+  }
+
+  function revealRows(table) {
+    getRows(table).forEach(row => {
+      row.classList.remove(HIDDEN_ROW_CLASS);
+    });
   }
 
   function togglePanel(toolbar, panelName) {
@@ -307,20 +441,13 @@
       selectedPanel.hidden = false;
       selectedButton.classList.add("is-active");
 
-      const firstInput = selectedPanel.querySelector("input, select");
+      const firstInput = selectedPanel.querySelector("input:not(:disabled), select:not(:disabled)");
       if (firstInput) firstInput.focus();
     }
   }
 
   function getRows(table) {
-    const selectors = [
-      "tbody tr",
-      ".notion-collection-table__body .notion-collection-table__row",
-      ".notion-collection-table__row",
-      "[role='row']"
-    ];
-
-    for (const selector of selectors) {
+    for (const selector of SELECTORS.rows) {
       const rows = unique(
         [...table.querySelectorAll(selector)].filter(row => isUsableRow(row))
       );
@@ -361,22 +488,13 @@
   }
 
   function getHeaders(table, firstRow) {
-    const selectors = [
-      "thead th",
-      ".notion-collection-table__head-cell",
-      ".notion-collection-table__header-cell",
-      "[role='columnheader']"
-    ];
+    const headerCells = getHeaderCells(table);
 
-    for (const selector of selectors) {
-      const headerNodes = [...table.querySelectorAll(selector)];
-
-      if (headerNodes.length) {
-        return headerNodes.map((node, index) => ({
-          index,
-          label: cleanHeader(getText(node)) || `Column ${index + 1}`
-        }));
-      }
+    if (headerCells.length) {
+      return headerCells.map((node, index) => ({
+        index,
+        label: cleanHeader(getText(node)) || `Column ${index + 1}`
+      }));
     }
 
     return getCells(firstRow).map((cell, index) => ({
@@ -385,30 +503,384 @@
     }));
   }
 
+  function getHeaderCells(table) {
+    for (const selector of SELECTORS.headers) {
+      const headers = [...table.querySelectorAll(selector)];
+
+      if (headers.length) return unique(headers);
+    }
+
+    return [];
+  }
+
   function getCells(row) {
-    const cells = [
-      ...row.querySelectorAll(
-        "td, .notion-collection-table__cell, [role='cell'], [class*='collection-table__cell']"
-      )
-    ];
+    const cells = [...row.querySelectorAll(SELECTORS.cells)];
 
     if (cells.length) return unique(cells);
 
     return [...row.children];
   }
 
-  function getCellText(row, index) {
+  function getCell(row, index) {
     const cells = getCells(row);
 
-    return getText(cells[index] || row);
+    return cells[index] || row;
+  }
+
+  function getCellText(row, index) {
+    return getText(getCell(row, index));
+  }
+
+  function rowMatchesSmartFilter(row, filterValue) {
+    if (isEmptyKeyword(filterValue)) {
+      return rowHasEmptyCell(row);
+    }
+
+    return getCells(row).some(cell => matchesSmartFilter(cell, filterValue));
+  }
+
+  function matchesSmartFilter(cellOrValue, filterValue) {
+    const filterText = cleanText(filterValue).toLowerCase();
+
+    if (!filterText) return true;
+
+    const cellText = getFilterableText(cellOrValue);
+
+    if (isEmptyKeyword(filterText)) {
+      return cellText === "" || cellText.includes("empty") || cellText.includes("blank");
+    }
+
+    const cellNumber = parseNumber(cellText);
+    const filterNumber = parseNumber(filterText);
+
+    if (cellNumber !== null && filterNumber !== null) {
+      return cellNumber === filterNumber;
+    }
+
+    const numericComparison = filterText.match(/^(>=|<=|>|<|=)\s*(-?\d+(?:\.\d+)?)$/);
+
+    if (cellNumber !== null && numericComparison) {
+      const operator = numericComparison[1];
+      const targetNumber = Number(numericComparison[2]);
+
+      if (operator === ">") return cellNumber > targetNumber;
+      if (operator === "<") return cellNumber < targetNumber;
+      if (operator === ">=") return cellNumber >= targetNumber;
+      if (operator === "<=") return cellNumber <= targetNumber;
+      if (operator === "=") return cellNumber === targetNumber;
+    }
+
+    return cellText.includes(filterText);
+  }
+
+  function matchesCheckboxFilter(cell, filterValue) {
+    const normalizedValue = normalizeCheckboxFilterValue(filterValue);
+
+    if (!normalizedValue) return true;
+
+    const checkboxState = readCheckboxState(cell);
+
+    if (normalizedValue === "checked") {
+      return checkboxState === true;
+    }
+
+    if (normalizedValue === "unchecked") {
+      return checkboxState === false;
+    }
+
+    return true;
+  }
+
+  function getFilterableText(cellOrValue) {
+    const checkboxState = readCheckboxState(cellOrValue);
+
+    if (checkboxState === true) {
+      return "checked true yes 1 on";
+    }
+
+    if (checkboxState === false) {
+      return "unchecked false no 0 off empty blank";
+    }
+
+    return cleanText(
+      typeof cellOrValue === "string" ? cellOrValue : getText(cellOrValue)
+    ).toLowerCase();
+  }
+
+  function normalizeCheckboxFilterValue(value) {
+    const text = cleanText(value).toLowerCase();
+
+    if (
+      text === "checked" ||
+      text === "check" ||
+      text === "true" ||
+      text === "yes" ||
+      text === "1" ||
+      text === "on"
+    ) {
+      return "checked";
+    }
+
+    if (
+      text === "unchecked" ||
+      text === "uncheck" ||
+      text === "false" ||
+      text === "no" ||
+      text === "0" ||
+      text === "off" ||
+      text === "empty" ||
+      text === "blank" ||
+      text === "not checked" ||
+      text === "not-checked"
+    ) {
+      return "unchecked";
+    }
+
+    return "";
+  }
+
+  function compareCheckboxValues(aState, bState) {
+    return getCheckboxSortRank(aState) - getCheckboxSortRank(bState);
+  }
+
+  function getCheckboxSortRank(value) {
+    if (value === false) return 0;
+    if (value === true) return 1;
+
+    return 2;
+  }
+
+  function isCheckboxColumn(table, columnIndex) {
+    const rows = getRows(table);
+    const cells = rows.map(row => getCell(row, columnIndex)).filter(Boolean);
+
+    if (!cells.length) return false;
+
+    const sampleCells = cells.slice(0, 25);
+
+    const hasRealTextContent = sampleCells.some(cell => {
+      const text = cleanText(cell.innerText || cell.textContent || "")
+        .replace(/[✓✔☑]/g, "")
+        .trim();
+
+      return text.length > 0;
+    });
+
+    if (hasRealTextContent) return false;
+
+    const checkboxLikeCount = sampleCells.filter(cell => (
+      getExplicitCheckboxState(cell) !== null ||
+      hasCheckboxBox(cell) ||
+      hasCheckmarkSignal(cell)
+    )).length;
+
+    return checkboxLikeCount > 0;
+  }
+
+  function readCheckboxState(cell) {
+    if (!cell || typeof cell === "string" || !(cell instanceof Element)) {
+      return null;
+    }
+
+    const visibleText = cleanText(cell.innerText || cell.textContent || "")
+      .replace(/[✓✔☑]/g, "")
+      .trim();
+
+    if (visibleText.length > 0) return null;
+
+    const explicitState = getExplicitCheckboxState(cell);
+
+    if (explicitState !== null) return explicitState;
+
+    if (!hasCheckboxBox(cell) && !hasCheckmarkSignal(cell)) {
+      return null;
+    }
+
+    if (hasCheckmarkSignal(cell)) return true;
+    if (hasStrongCheckedFill(cell)) return true;
+
+    return false;
+  }
+
+  function getExplicitCheckboxState(root) {
+    if (!root || !(root instanceof Element)) return null;
+
+    const elements = [
+      root,
+      ...root.querySelectorAll(SELECTORS.checkboxState)
+    ];
+
+    for (const element of elements) {
+      if (element.matches("input[type='checkbox']")) {
+        return element.checked;
+      }
+
+      const ariaChecked = getAttributeValue(element, "aria-checked");
+
+      if (ariaChecked === "true") return true;
+      if (ariaChecked === "false") return false;
+
+      const dataChecked = getAttributeValue(element, "data-checked");
+
+      if (dataChecked === "true") return true;
+      if (dataChecked === "false") return false;
+
+      const dataState = getAttributeValue(element, "data-state");
+
+      if (dataState === "checked" || dataState === "on") return true;
+      if (dataState === "unchecked" || dataState === "off") return false;
+    }
+
+    return null;
+  }
+
+  function hasCheckboxBox(root) {
+    if (!root || !(root instanceof Element)) return false;
+
+    return Boolean(getCheckboxBoxElement(root) || hasCheckboxSvgBox(root));
+  }
+
+  function getCheckboxBoxElement(root) {
+    if (!root || !(root instanceof Element)) return null;
+
+    const elements = [root, ...root.querySelectorAll("*")];
+
+    const candidates = elements
+      .filter(element => isCheckboxBoxElement(element))
+      .sort((a, b) => {
+        const aRect = a.getBoundingClientRect();
+        const bRect = b.getBoundingClientRect();
+
+        return aRect.width * aRect.height - bRect.width * bRect.height;
+      });
+
+    return candidates[0] || null;
+  }
+
+  function isCheckboxBoxElement(element) {
+    const rect = element.getBoundingClientRect();
+
+    if (!rect.width || !rect.height) return false;
+    if (rect.width < 8 || rect.height < 8) return false;
+    if (rect.width > 32 || rect.height > 32) return false;
+    if (Math.abs(rect.width - rect.height) > 8) return false;
+
+    const text = cleanText(element.innerText || element.textContent || "")
+      .replace(/[✓✔☑]/g, "")
+      .trim();
+
+    if (text.length > 0) return false;
+
+    const style = window.getComputedStyle(element);
+
+    const hasBorder =
+      parseFloat(style.borderTopWidth || 0) > 0 ||
+      parseFloat(style.borderRightWidth || 0) > 0 ||
+      parseFloat(style.borderBottomWidth || 0) > 0 ||
+      parseFloat(style.borderLeftWidth || 0) > 0;
+
+    const hasBackground = isVisibleColor(style.backgroundColor);
+    const hasCheckboxSignature = /\bcheckbox\b/i.test(getElementSignature(element));
+
+    return hasCheckboxSignature || hasBorder || hasBackground;
+  }
+
+  function hasCheckboxSvgBox(root) {
+    if (!root || !(root instanceof Element)) return false;
+
+    const svgBoxes = [...root.querySelectorAll(SELECTORS.checkboxSvgShapes)];
+
+    return svgBoxes.some(shape => {
+      const tagName = shape.tagName.toLowerCase();
+
+      if (tagName === "rect") {
+        return isSmallSvgShape(shape);
+      }
+
+      const d = shape.getAttribute("d") || "";
+
+      if (!d) return false;
+
+      return /z\s*$/i.test(d) && isSmallSvgShape(shape);
+    });
+  }
+
+  function isSmallSvgShape(shape) {
+    const svg = shape.closest("svg");
+
+    if (!svg) return false;
+
+    const rect = svg.getBoundingClientRect();
+
+    if (!rect.width || !rect.height) return false;
+    if (rect.width < 8 || rect.height < 8) return false;
+    if (rect.width > 32 || rect.height > 32) return false;
+
+    return Math.abs(rect.width - rect.height) <= 8;
+  }
+
+  function hasStrongCheckedFill(root) {
+    if (!root || !(root instanceof Element)) return false;
+
+    const elements = [root, ...root.querySelectorAll("*")];
+
+    return elements.some(element => {
+      const rect = element.getBoundingClientRect();
+
+      if (!rect.width || !rect.height) return false;
+      if (rect.width < 8 || rect.height < 8) return false;
+      if (rect.width > 32 || rect.height > 32) return false;
+      if (Math.abs(rect.width - rect.height) > 8) return false;
+
+      return isVisibleColor(window.getComputedStyle(element).backgroundColor);
+    });
+  }
+
+  function hasCheckmarkSignal(root) {
+    if (!root || !(root instanceof Element)) return false;
+
+    if (/✓|✔|☑/.test(root.textContent || "")) {
+      return true;
+    }
+
+    const shapes = [...root.querySelectorAll(SELECTORS.checkmarkSvgShapes)];
+
+    return shapes.some(shape => {
+      const tagName = shape.tagName.toLowerCase();
+
+      if (tagName === "polyline") {
+        const points = shape.getAttribute("points") || "";
+
+        return points.trim().split(/\s+/).length >= 3;
+      }
+
+      const d = shape.getAttribute("d") || "";
+
+      if (!d) return false;
+      if (/z\s*$/i.test(d)) return false;
+
+      const commandCount = (d.match(/[mlhvcsqtaz]/gi) || []).length;
+
+      return commandCount <= 4 && /l/i.test(d);
+    });
+  }
+
+  function rowHasEmptyCell(row) {
+    return getCells(row).some(cell => {
+      const checkboxState = readCheckboxState(cell);
+
+      if (checkboxState !== null) {
+        return checkboxState === false;
+      }
+
+      return getText(cell) === "";
+    });
   }
 
   function highlightSearchMatches(row, searchValue) {
     const searchText = cleanText(searchValue);
 
-    if (!searchText || isEmptyKeyword(searchText)) {
-      return;
-    }
+    if (!searchText || isEmptyKeyword(searchText)) return;
 
     const exactNumberOnly = isNumberSearch(searchText);
 
@@ -528,18 +1000,14 @@
   function matchesSmartSearch(row, searchValue) {
     const searchText = cleanText(searchValue).toLowerCase();
 
-    if (!searchText) {
-      return true;
-    }
+    if (!searchText) return true;
 
     if (isEmptyKeyword(searchText)) {
       return rowHasEmptyCell(row);
     }
 
     if (isNumberSearch(searchText)) {
-      return getCells(row).some(cell => {
-        return matchesExactNumber(getText(cell), searchText);
-      });
+      return getCells(row).some(cell => matchesExactNumber(getText(cell), searchText));
     }
 
     return getText(row).toLowerCase().includes(searchText);
@@ -550,9 +1018,7 @@
     const searchNumber = parseNumber(searchValue);
     const cellNumber = parseNumber(cellText);
 
-    if (searchNumber === null) {
-      return false;
-    }
+    if (searchNumber === null) return false;
 
     if (cellNumber !== null) {
       return cellNumber === searchNumber;
@@ -565,41 +1031,6 @@
     const exactNumberPattern = new RegExp(`(^|[^0-9])${escapedSearchValue}([^0-9]|$)`);
 
     return exactNumberPattern.test(normalizedCellText);
-  }
-
-  function isNumberSearch(value) {
-    return parseNumber(value) !== null;
-  }
-
-  function matchesSmartFilter(cellValue, filterValue) {
-    const cellText = cleanText(cellValue);
-    const filterText = cleanText(filterValue);
-
-    if (isEmptyKeyword(filterText)) {
-      return cellText === "";
-    }
-
-    const cellNumber = parseNumber(cellText);
-    const filterNumber = parseNumber(filterText);
-
-    if (cellNumber !== null && filterNumber !== null) {
-      return cellNumber === filterNumber;
-    }
-
-    const numericComparison = filterText.match(/^(>=|<=|>|<|=)\s*(-?\d+(?:\.\d+)?)$/);
-
-    if (cellNumber !== null && numericComparison) {
-      const operator = numericComparison[1];
-      const targetNumber = Number(numericComparison[2]);
-
-      if (operator === ">") return cellNumber > targetNumber;
-      if (operator === "<") return cellNumber < targetNumber;
-      if (operator === ">=") return cellNumber >= targetNumber;
-      if (operator === "<=") return cellNumber <= targetNumber;
-      if (operator === "=") return cellNumber === targetNumber;
-    }
-
-    return cellText.toLowerCase().includes(filterText.toLowerCase());
   }
 
   function compareValues(a, b) {
@@ -638,8 +1069,8 @@
     return Number(cleaned);
   }
 
-  function rowHasEmptyCell(row) {
-    return getCells(row).some(cell => getText(cell) === "");
+  function isNumberSearch(value) {
+    return parseNumber(value) !== null;
   }
 
   function isEmptyKeyword(value) {
@@ -651,6 +1082,49 @@
       text === "is:empty" ||
       text === "is:blank"
     );
+  }
+
+  function isVisibleColor(color) {
+    if (!color || color === "transparent") return false;
+
+    const match = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/i);
+
+    if (!match) return false;
+
+    const red = Number(match[1]);
+    const green = Number(match[2]);
+    const blue = Number(match[3]);
+    const alpha = match[4] === undefined ? 1 : Number(match[4]);
+
+    if (alpha <= 0.05) return false;
+
+    const isAlmostWhite = red > 245 && green > 245 && blue > 245;
+    const isVeryLightGray = red > 225 && green > 225 && blue > 225;
+
+    return !isAlmostWhite && !isVeryLightGray;
+  }
+
+  function getAttributeValue(element, attribute) {
+    if (!element || !element.getAttribute) return "";
+
+    return cleanText(element.getAttribute(attribute) || "").toLowerCase();
+  }
+
+  function getElementSignature(element) {
+    if (!element) return "";
+
+    const className =
+      typeof element.className === "string"
+        ? element.className
+        : element.getAttribute?.("class") || "";
+
+    return cleanText(`
+      ${className}
+      ${element.getAttribute?.("aria-label") || ""}
+      ${element.getAttribute?.("title") || ""}
+      ${element.getAttribute?.("data-state") || ""}
+      ${element.getAttribute?.("data-checked") || ""}
+    `).toLowerCase();
   }
 
   function getInsertBeforeNode(parent, rows) {
@@ -708,12 +1182,16 @@
     return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   }
 
-  function injectHighlightStyles() {
-    if (document.getElementById("super-db-tools-highlight-style")) return;
+  function injectBaseStyles() {
+    if (document.getElementById("super-db-tools-base-style")) return;
 
     const style = document.createElement("style");
-    style.id = "super-db-tools-highlight-style";
+    style.id = "super-db-tools-base-style";
     style.textContent = `
+      .${HIDDEN_ROW_CLASS} {
+        display: none !important;
+      }
+
       .super-db-tools__highlight {
         border-radius: 3px;
         padding: 0 2px;
@@ -754,4 +1232,3 @@
     subtree: true
   });
 })();
-
