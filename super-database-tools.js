@@ -1,4 +1,3 @@
-<script>
 (() => {
   const DB_SELECTOR = ".notion-collection-table";
   const READY_KEY = "superDbToolsReady";
@@ -755,4 +754,4 @@
     subtree: true
   });
 })();
-</script>
+
