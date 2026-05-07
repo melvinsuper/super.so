@@ -1,19 +1,9 @@
+<script>
 (() => {
-  const DEFAULTS = {
-    selector: ".notion-collection-table",
-    search: true,
-    filter: true,
-    sort: true,
-    emptySearch: true,
-    theme: {}
-  };
-
+  const DB_SELECTOR = ".notion-collection-table";
   const READY_KEY = "superDbToolsReady";
-  const tableState = new WeakMap();
-  const observerSettings = [];
 
-  let observer = null;
-  let hasManualInit = false;
+  const tableState = new WeakMap();
 
   const icons = {
     filter: `
@@ -33,95 +23,12 @@
     `
   };
 
-  const themeDefaults = {
-    toolsAlign: "flex-end",
-    toolsGap: "8px",
-    toolsMargin: "0 0 12px 0",
-
-    barGap: "6px",
-    barMinHeight: "36px",
-    barPadding: "0",
-    barBackground: "transparent",
-    barBorderColor: "transparent",
-    barRadius: "0",
-    barShadow: "none",
-
-    countColor: "rgba(55, 53, 47, 0.56)",
-    countFontSize: "13px",
-
-    buttonBackground: "transparent",
-    buttonColor: "rgba(55, 53, 47, 0.58)",
-    buttonBorderColor: "transparent",
-    buttonRadius: "8px",
-    buttonHeight: "32px",
-    buttonHoverBackground: "rgba(55, 53, 47, 0.08)",
-    buttonHoverColor: "rgba(55, 53, 47, 0.88)",
-    buttonHoverBorderColor: "rgba(55, 53, 47, 0.08)",
-    activeBackground: "rgba(55, 53, 47, 0.08)",
-    activeColor: "rgba(55, 53, 47, 0.88)",
-    activeBorderColor: "rgba(55, 53, 47, 0.08)",
-    activeShadow: "0 0 0 2px rgba(55, 53, 47, 0.05)",
-
-    panelWidth: "520px",
-    panelGap: "10px",
-    panelPadding: "12px",
-    panelBackground: "rgba(255, 255, 255, 0.96)",
-    panelBorderColor: "rgba(55, 53, 47, 0.12)",
-    panelRadius: "12px",
-    panelShadow: "0 12px 32px rgba(15, 15, 15, 0.08)",
-
-    labelColor: "rgba(55, 53, 47, 0.72)",
-    labelFontSize: "12px",
-    labelFontWeight: "600",
-
-    inputBackground: "#ffffff",
-    inputColor: "rgba(55, 53, 47, 0.9)",
-    inputBorderColor: "rgba(55, 53, 47, 0.16)",
-    inputRadius: "8px",
-    inputHeight: "36px",
-    inputFontSize: "14px",
-    focusBorderColor: "rgba(35, 131, 226, 0.52)",
-    focusShadow: "0 0 0 3px rgba(35, 131, 226, 0.12)"
-  };
-
-  function init(options = {}) {
-    hasManualInit = true;
-    runInit(options);
+  function initAllTables() {
+    injectHighlightStyles();
+    document.querySelectorAll(DB_SELECTOR).forEach(initTable);
   }
 
-  function runInit(options = {}) {
-    const settings = normalizeSettings(options);
-
-    const start = () => {
-      applyTheme(settings.theme);
-      initAllTables(settings);
-      observeTables(settings);
-    };
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", start, { once: true });
-      return;
-    }
-
-    start();
-  }
-
-  function normalizeSettings(options) {
-    return {
-      ...DEFAULTS,
-      ...options,
-      theme: {
-        ...themeDefaults,
-        ...(options.theme || {})
-      }
-    };
-  }
-
-  function initAllTables(settings) {
-    document.querySelectorAll(settings.selector).forEach(table => initTable(table, settings));
-  }
-
-  function initTable(table, settings) {
+  function initTable(table) {
     if (table.dataset[READY_KEY] === "true") return;
 
     const rows = getRows(table);
@@ -132,7 +39,7 @@
     setOriginalIndexes(rows);
 
     const headers = getHeaders(table, rows[0]);
-    const toolbar = createToolbar(headers, settings);
+    const toolbar = createToolbar(headers);
 
     table.parentNode.insertBefore(toolbar, table);
 
@@ -143,8 +50,7 @@
       sortColumn: "none",
       sortDirection: "asc",
       headers,
-      toolbar,
-      settings
+      toolbar
     };
 
     tableState.set(table, state);
@@ -202,7 +108,7 @@
     updateTable(table);
   }
 
-  function createToolbar(headers, settings) {
+  function createToolbar(headers) {
     const filterOptions = `
       <option value="all">All columns</option>
       ${headers.map(header => `<option value="${header.index}">${escapeHTML(header.label)}</option>`).join("")}
@@ -220,68 +126,56 @@
       <div class="super-db-tools__bar">
         <span class="super-db-tools__count" data-super-db-count></span>
 
-        ${settings.filter ? `
-          <button type="button" class="super-db-tools__icon" data-super-db-panel="filter" aria-label="Filter">
-            ${icons.filter}
-          </button>
-        ` : ""}
+        <button type="button" class="super-db-tools__icon" data-super-db-panel="filter" aria-label="Filter">
+          ${icons.filter}
+        </button>
 
-        ${settings.sort ? `
-          <button type="button" class="super-db-tools__icon" data-super-db-panel="sort" aria-label="Sort">
-            ${icons.sort}
-          </button>
-        ` : ""}
+        <button type="button" class="super-db-tools__icon" data-super-db-panel="sort" aria-label="Sort">
+          ${icons.sort}
+        </button>
 
-        ${settings.search ? `
-          <button type="button" class="super-db-tools__icon" data-super-db-panel="search" aria-label="Search">
-            ${icons.search}
-          </button>
-        ` : ""}
+        <button type="button" class="super-db-tools__icon" data-super-db-panel="search" aria-label="Search">
+          ${icons.search}
+        </button>
 
         <button type="button" class="super-db-tools__clear" data-super-db-clear>
           Clear
         </button>
       </div>
 
-      ${settings.filter ? `
-        <div class="super-db-tools__panel" data-super-db-panel-content="filter" hidden>
-          <label>
-            Filter column
-            <select data-super-db-filter-column>
-              ${filterOptions}
-            </select>
-          </label>
+      <div class="super-db-tools__panel" data-super-db-panel-content="filter" hidden>
+        <label>
+          Filter column
+          <select data-super-db-filter-column>
+            ${filterOptions}
+          </select>
+        </label>
 
-          <label>
-            Contains
-            <input type="text" data-super-db-filter-text placeholder="Type filter text or empty">
-          </label>
-        </div>
-      ` : ""}
+        <label>
+          Contains
+          <input type="text" data-super-db-filter-text placeholder="Type filter text or empty">
+        </label>
+      </div>
 
-      ${settings.sort ? `
-        <div class="super-db-tools__panel" data-super-db-panel-content="sort" hidden>
-          <label>
-            Sort by
-            <select data-super-db-sort-column>
-              ${sortOptions}
-            </select>
-          </label>
+      <div class="super-db-tools__panel" data-super-db-panel-content="sort" hidden>
+        <label>
+          Sort by
+          <select data-super-db-sort-column>
+            ${sortOptions}
+          </select>
+        </label>
 
-          <button type="button" class="super-db-tools__direction" data-super-db-sort-direction>
-            Ascending
-          </button>
-        </div>
-      ` : ""}
+        <button type="button" class="super-db-tools__direction" data-super-db-sort-direction>
+          Ascending
+        </button>
+      </div>
 
-      ${settings.search ? `
-        <div class="super-db-tools__panel" data-super-db-panel-content="search" hidden>
-          <label>
-            Search table
-            <input type="search" data-super-db-search placeholder="Search rows or type empty">
-          </label>
-        </div>
-      ` : ""}
+      <div class="super-db-tools__panel" data-super-db-panel-content="search" hidden>
+        <label>
+          Search table
+          <input type="search" data-super-db-search placeholder="Search rows or type empty">
+        </label>
+      </div>
     `;
 
     return toolbar;
@@ -294,6 +188,8 @@
     const rows = getRows(table);
     if (!rows.length) return;
 
+    rows.forEach(clearSearchHighlights);
+
     setOriginalIndexes(rows);
     sortRows(rows, state);
 
@@ -302,24 +198,18 @@
     rows.forEach(row => {
       const rowText = getText(row).toLowerCase();
 
-      const matchesSearch =
-        !state.search ||
-        (
-          state.settings.emptySearch && isEmptyKeyword(state.search)
-            ? rowHasEmptyCell(row)
-            : rowText.includes(state.search)
-        );
+      const matchesSearch = matchesSmartSearch(row, state.search);
 
       let matchesFilter = true;
 
       if (state.filterText) {
         if (state.filterColumn === "all") {
-          matchesFilter = state.settings.emptySearch && isEmptyKeyword(state.filterText)
+          matchesFilter = isEmptyKeyword(state.filterText)
             ? rowHasEmptyCell(row)
             : rowText.includes(state.filterText);
         } else {
           const cellText = getCellText(row, Number(state.filterColumn));
-          matchesFilter = matchesSmartFilter(cellText, state.filterText, state.settings);
+          matchesFilter = matchesSmartFilter(cellText, state.filterText);
         }
       }
 
@@ -329,6 +219,7 @@
 
       if (shouldShow) {
         visibleCount += 1;
+        highlightSearchMatches(row, state.search);
       }
     });
 
@@ -513,11 +404,179 @@
     return getText(cells[index] || row);
   }
 
-  function matchesSmartFilter(cellValue, filterValue, settings) {
+  function highlightSearchMatches(row, searchValue) {
+    const searchText = cleanText(searchValue);
+
+    if (!searchText || isEmptyKeyword(searchText)) {
+      return;
+    }
+
+    const exactNumberOnly = isNumberSearch(searchText);
+
+    getCells(row).forEach(cell => {
+      highlightTextInsideElement(cell, searchText, exactNumberOnly);
+    });
+  }
+
+  function clearSearchHighlights(row) {
+    row.querySelectorAll("mark.super-db-tools__highlight").forEach(mark => {
+      const parent = mark.parentNode;
+
+      if (!parent) return;
+
+      parent.replaceChild(document.createTextNode(mark.textContent), mark);
+      parent.normalize();
+    });
+  }
+
+  function highlightTextInsideElement(element, searchText, exactNumberOnly) {
+    if (!element) return;
+
+    const textNodes = [];
+    const walker = document.createTreeWalker(
+      element,
+      NodeFilter.SHOW_TEXT,
+      {
+        acceptNode(node) {
+          const parent = node.parentElement;
+
+          if (!parent) return NodeFilter.FILTER_REJECT;
+
+          if (
+            parent.closest("mark.super-db-tools__highlight") ||
+            parent.closest("script, style, textarea, input, select, svg")
+          ) {
+            return NodeFilter.FILTER_REJECT;
+          }
+
+          return cleanText(node.nodeValue)
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_REJECT;
+        }
+      }
+    );
+
+    let node;
+
+    while ((node = walker.nextNode())) {
+      textNodes.push(node);
+    }
+
+    textNodes.forEach(textNode => {
+      highlightTextNode(textNode, searchText, exactNumberOnly);
+    });
+  }
+
+  function highlightTextNode(textNode, searchText, exactNumberOnly) {
+    const text = textNode.nodeValue;
+    const ranges = getHighlightRanges(text, searchText, exactNumberOnly);
+
+    if (!ranges.length) return;
+
+    const fragment = document.createDocumentFragment();
+    let currentIndex = 0;
+
+    ranges.forEach(range => {
+      if (range.start > currentIndex) {
+        fragment.appendChild(
+          document.createTextNode(text.slice(currentIndex, range.start))
+        );
+      }
+
+      const mark = document.createElement("mark");
+      mark.className = "super-db-tools__highlight";
+      mark.textContent = text.slice(range.start, range.end);
+
+      fragment.appendChild(mark);
+
+      currentIndex = range.end;
+    });
+
+    if (currentIndex < text.length) {
+      fragment.appendChild(document.createTextNode(text.slice(currentIndex)));
+    }
+
+    textNode.parentNode.replaceChild(fragment, textNode);
+  }
+
+  function getHighlightRanges(text, searchText, exactNumberOnly) {
+    const ranges = [];
+    const escapedSearchText = escapeRegExp(searchText);
+
+    const pattern = exactNumberOnly
+      ? new RegExp(`(^|[^0-9])(${escapedSearchText})(?=[^0-9]|$)`, "gi")
+      : new RegExp(escapedSearchText, "gi");
+
+    let match;
+
+    while ((match = pattern.exec(text)) !== null) {
+      const prefixLength = exactNumberOnly ? match[1].length : 0;
+      const matchedValue = exactNumberOnly ? match[2] : match[0];
+
+      const start = match.index + prefixLength;
+      const end = start + matchedValue.length;
+
+      ranges.push({ start, end });
+
+      if (match.index === pattern.lastIndex) {
+        pattern.lastIndex += 1;
+      }
+    }
+
+    return ranges;
+  }
+
+  function matchesSmartSearch(row, searchValue) {
+    const searchText = cleanText(searchValue).toLowerCase();
+
+    if (!searchText) {
+      return true;
+    }
+
+    if (isEmptyKeyword(searchText)) {
+      return rowHasEmptyCell(row);
+    }
+
+    if (isNumberSearch(searchText)) {
+      return getCells(row).some(cell => {
+        return matchesExactNumber(getText(cell), searchText);
+      });
+    }
+
+    return getText(row).toLowerCase().includes(searchText);
+  }
+
+  function matchesExactNumber(cellValue, searchValue) {
+    const cellText = cleanText(cellValue);
+    const searchNumber = parseNumber(searchValue);
+    const cellNumber = parseNumber(cellText);
+
+    if (searchNumber === null) {
+      return false;
+    }
+
+    if (cellNumber !== null) {
+      return cellNumber === searchNumber;
+    }
+
+    const normalizedCellText = cellText.replace(/,/g, "");
+    const normalizedSearchValue = searchValue.replace(/,/g, "");
+    const escapedSearchValue = escapeRegExp(normalizedSearchValue);
+
+    const exactNumberPattern = new RegExp(`(^|[^0-9])${escapedSearchValue}([^0-9]|$)`);
+
+    return exactNumberPattern.test(normalizedCellText);
+  }
+
+  function isNumberSearch(value) {
+    return parseNumber(value) !== null;
+  }
+
+  function matchesSmartFilter(cellValue, filterValue) {
     const cellText = cleanText(cellValue);
     const filterText = cleanText(filterValue);
 
-    if (settings.emptySearch && isEmptyKeyword(filterText)) {
+    if (isEmptyKeyword(filterText)) {
       return cellText === "";
     }
 
@@ -619,191 +678,6 @@
     });
   }
 
-  function applyTheme(theme = {}) {
-    const styles = {
-      ...themeDefaults,
-      ...theme
-    };
-
-    const styleId = "super-db-tools-theme";
-    let style = document.getElementById(styleId);
-
-    if (!style) {
-      style = document.createElement("style");
-      style.id = styleId;
-      document.head.appendChild(style);
-    }
-
-    const value = key => cleanCSSValue(styles[key]);
-
-    style.textContent = `
-      .super-db-tools {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: ${value("toolsAlign")};
-        gap: ${value("toolsGap")};
-        margin: ${value("toolsMargin")};
-        position: relative;
-        z-index: 5;
-      }
-
-      .super-db-tools__bar {
-        display: inline-flex;
-        align-items: center;
-        justify-content: flex-end;
-        gap: ${value("barGap")};
-        min-height: ${value("barMinHeight")};
-        padding: ${value("barPadding")};
-        background: ${value("barBackground")};
-        border: 1px solid ${value("barBorderColor")};
-        border-radius: ${value("barRadius")};
-        box-shadow: ${value("barShadow")};
-      }
-
-      .super-db-tools__count {
-        font-size: ${value("countFontSize")};
-        line-height: 1;
-        color: ${value("countColor")};
-        margin-right: 4px;
-        white-space: nowrap;
-      }
-
-      .super-db-tools__icon,
-      .super-db-tools__clear,
-      .super-db-tools__direction {
-        appearance: none;
-        border: 1px solid ${value("buttonBorderColor")};
-        background: ${value("buttonBackground")};
-        color: ${value("buttonColor")};
-        border-radius: ${value("buttonRadius")};
-        height: ${value("buttonHeight")};
-        cursor: pointer;
-        transition:
-          background-color 160ms ease,
-          color 160ms ease,
-          border-color 160ms ease,
-          box-shadow 160ms ease;
-      }
-
-      .super-db-tools__icon {
-        width: ${value("buttonHeight")};
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .super-db-tools__clear,
-      .super-db-tools__direction {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0 10px;
-        font-size: 13px;
-        font-weight: 500;
-      }
-
-      .super-db-tools__icon:hover,
-      .super-db-tools__clear:hover,
-      .super-db-tools__direction:hover {
-        background: ${value("buttonHoverBackground")};
-        color: ${value("buttonHoverColor")};
-        border-color: ${value("buttonHoverBorderColor")};
-      }
-
-      .super-db-tools__icon.is-active {
-        background: ${value("activeBackground")};
-        color: ${value("activeColor")};
-        border-color: ${value("activeBorderColor")};
-        box-shadow: ${value("activeShadow")};
-      }
-
-      .super-db-tools__panel {
-        width: min(${value("panelWidth")}, 100%);
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: ${value("panelGap")};
-        padding: ${value("panelPadding")};
-        background: ${value("panelBackground")};
-        border: 1px solid ${value("panelBorderColor")};
-        border-radius: ${value("panelRadius")};
-        box-shadow: ${value("panelShadow")};
-      }
-
-      .super-db-tools__panel[hidden] {
-        display: none !important;
-      }
-
-      .super-db-tools__panel label {
-        display: grid;
-        gap: 6px;
-        font-size: ${value("labelFontSize")};
-        font-weight: ${value("labelFontWeight")};
-        color: ${value("labelColor")};
-      }
-
-      .super-db-tools__panel input,
-      .super-db-tools__panel select {
-        width: 100%;
-        height: ${value("inputHeight")};
-        border: 1px solid ${value("inputBorderColor")};
-        border-radius: ${value("inputRadius")};
-        background: ${value("inputBackground")};
-        color: ${value("inputColor")};
-        font-size: ${value("inputFontSize")};
-        outline: none;
-        padding: 0 10px;
-      }
-
-      .super-db-tools__panel input:focus,
-      .super-db-tools__panel select:focus {
-        border-color: ${value("focusBorderColor")};
-        box-shadow: ${value("focusShadow")};
-      }
-
-      .super-db-row-hidden {
-        display: none !important;
-      }
-
-      @media (max-width: 640px) {
-        .super-db-tools {
-          align-items: stretch;
-        }
-
-        .super-db-tools__bar {
-          justify-content: flex-start;
-          overflow-x: auto;
-          padding-bottom: 2px;
-        }
-
-        .super-db-tools__panel {
-          grid-template-columns: 1fr;
-        }
-
-        .super-db-tools__count {
-          margin-right: auto;
-        }
-      }
-    `;
-  }
-
-  function observeTables(settings) {
-    observerSettings.push(settings);
-
-    if (observer) return;
-
-    observer = new MutationObserver(() => {
-      window.requestAnimationFrame(() => {
-        observerSettings.forEach(initAllTables);
-      });
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
-  }
-
   function getText(element) {
     return cleanText(element?.innerText || element?.textContent || "");
   }
@@ -831,11 +705,25 @@
       .replace(/"/g, "&quot;");
   }
 
-  function cleanCSSValue(value) {
-    return String(value ?? "")
-      .replace(/<\/?style[^>]*>/gi, "")
-      .replace(/[{};]/g, "")
-      .trim();
+  function escapeRegExp(value) {
+    return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  }
+
+  function injectHighlightStyles() {
+    if (document.getElementById("super-db-tools-highlight-style")) return;
+
+    const style = document.createElement("style");
+    style.id = "super-db-tools-highlight-style";
+    style.textContent = `
+      .super-db-tools__highlight {
+        border-radius: 3px;
+        padding: 0 2px;
+        background: color-mix(in srgb, currentColor 18%, transparent);
+        color: inherit;
+      }
+    `;
+
+    document.head.appendChild(style);
   }
 
   if (!window.superDbToolsOutsideClickReady) {
@@ -856,20 +744,15 @@
     });
   }
 
-  window.SuperDatabaseTools = {
-    init,
-    applyTheme
-  };
+  initAllTables();
 
-  const autoStart = () => {
-    if (hasManualInit || window.SuperDatabaseToolsAutoInit === false) return;
+  const observer = new MutationObserver(() => {
+    window.requestAnimationFrame(initAllTables);
+  });
 
-    runInit(window.SuperDatabaseToolsConfig || {});
-  };
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", autoStart, { once: true });
-  } else {
-    window.setTimeout(autoStart, 0);
-  }
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
 })();
+</script>
