@@ -1,0 +1,148 @@
+/* Super custom tabs - Notion-style design */
+
+.super-tabs {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 36px 0 !important;
+  padding: 18px 20px 22px !important;
+  border: 1px solid rgba(55, 53, 47, 0.12) !important;
+  border-radius: 12px !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+
+.super-tabs__nav {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  width: 100% !important;
+  margin: 0 0 22px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.super-tabs__button {
+  appearance: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 34px !important;
+  margin: 0 !important;
+  padding: 6px 12px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  color: rgba(55, 53, 47, 0.62) !important;
+  box-shadow: none !important;
+  cursor: pointer !important;
+  font: inherit !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.super-tabs__button:hover {
+  background: rgba(55, 53, 47, 0.06) !important;
+  color: rgba(55, 53, 47, 0.9) !important;
+  transform: none !important;
+}
+
+.super-tabs__button.is-active {
+  background: rgba(55, 53, 47, 0.08) !important;
+  color: #37352f !important;
+  box-shadow: none !important;
+}
+
+.super-tabs__panels {
+  width: 100% !important;
+}
+
+.super-tabs__panel {
+  display: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  color: inherit !important;
+  animation: superTabsNotionFade 160ms ease both;
+}
+
+.super-tabs__panel.is-active {
+  display: block !important;
+}
+
+@keyframes superTabsNotionFade {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dark mode */
+
+html.theme-dark .super-tabs {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+html.theme-dark .super-tabs__button {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+html.theme-dark .super-tabs__button:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+html.theme-dark .super-tabs__button.is-active {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+
+/* Mobile */
+
+@media (max-width: 766px) {
+  .super-tabs {
+    margin: 28px 0 !important;
+    padding: 16px 14px 20px !important;
+    border-radius: 12px !important;
+  }
+
+  .super-tabs__nav {
+    flex-wrap: nowrap !important;
+    gap: 4px !important;
+    margin-bottom: 20px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .super-tabs__nav::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .super-tabs__button {
+    flex: 0 0 auto !important;
+    height: 32px !important;
+    padding: 6px 11px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+  }
+}
