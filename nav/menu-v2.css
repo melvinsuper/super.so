@@ -1,0 +1,244 @@
+/* Super Safe PillNav Hover Effect */
+/* Save as a CSS file for GitHub/jsDelivr, or paste in Super > Code > CSS */
+
+/* Hide old effects from previous attempts */
+.super-gooey-effect,
+.super-gooey-pill,
+.super-gooey-filter,
+.super-gooey-text,
+.super-pillnav-hover-circle {
+  display: none !important;
+}
+
+/* Reset old navbar layout changes from previous versions */
+.super-navbar.super-pillnav-ready .super-navbar__item-list,
+.super-navbar.super-pillnav-clean .super-navbar__item-list,
+.super-navbar.super-pillnav-safe .super-navbar__item-list {
+  background: transparent !important;
+  height: auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+/* Do not modify the logo */
+.super-navbar.super-pillnav-safe .super-navbar__logo,
+.super-navbar.super-pillnav-safe .super-navbar__logo:hover,
+.super-navbar.super-pillnav-safe .super-navbar__logo img {
+  width: auto !important;
+  height: auto !important;
+  min-width: unset !important;
+  min-height: unset !important;
+  max-width: unset !important;
+  max-height: unset !important;
+  padding: unset !important;
+  margin: unset !important;
+  background: unset !important;
+  border-radius: unset !important;
+  overflow: visible !important;
+  transform: none !important;
+}
+
+/* Keep Super's original navbar structure */
+.super-navbar.super-pillnav-safe,
+.super-navbar.super-pillnav-safe .super-navbar__content,
+.super-navbar.super-pillnav-safe .super-navbar__item-list {
+  overflow: visible !important;
+}
+
+/* Navbar list items */
+.super-navbar.super-pillnav-safe .super-navbar__item-list > li {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  overflow: visible !important;
+}
+
+/* The actual link pill */
+.super-navbar.super-pillnav-safe .super-pillnav-link {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 42px !important;
+  padding: 0 22px !important;
+  border-radius: 999px !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  overflow: hidden !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  isolation: isolate !important;
+  transition: background-color 0.25s ease, color 0.25s ease !important;
+}
+
+/* Remove Super's default hover conflict only for transformed links */
+.super-navbar.super-pillnav-safe .super-pillnav-link:hover,
+.super-navbar.super-pillnav-safe .super-pillnav-link:focus,
+.super-navbar.super-pillnav-safe .super-pillnav-link:active {
+  background: #ffffff !important;
+  color: #000000 !important;
+  box-shadow: none !important;
+}
+
+/* Expanding circle animation */
+.super-navbar.super-pillnav-safe .super-pillnav-link::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  bottom: -115% !important;
+  width: 160% !important;
+  aspect-ratio: 1 / 1 !important;
+  border-radius: 999px !important;
+  background: #000000 !important;
+  transform: translateX(-50%) scale(0) !important;
+  transform-origin: 50% 100% !important;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+
+.super-navbar.super-pillnav-safe .super-pillnav-link:hover::before,
+.super-navbar.super-pillnav-safe .super-pillnav-link:focus-visible::before {
+  transform: translateX(-50%) scale(1.25) !important;
+}
+
+/* Text stack */
+.super-navbar.super-pillnav-safe .super-pillnav-label-stack {
+  position: relative !important;
+  display: inline-block !important;
+  line-height: 1 !important;
+  overflow: hidden !important;
+  z-index: 2 !important;
+}
+
+.super-navbar.super-pillnav-safe .super-pillnav-label-main,
+.super-navbar.super-pillnav-safe .super-pillnav-label-hover {
+  display: block !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  transition:
+    transform 0.36s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.22s ease !important;
+}
+
+/* Normal text */
+.super-navbar.super-pillnav-safe .super-pillnav-label-main {
+  color: #000000 !important;
+  transform: translateY(0) !important;
+  opacity: 1 !important;
+}
+
+/* Hover text */
+.super-navbar.super-pillnav-safe .super-pillnav-label-hover {
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  color: #ffffff !important;
+  transform: translateY(130%) !important;
+  opacity: 0 !important;
+}
+
+.super-navbar.super-pillnav-safe .super-pillnav-link:hover .super-pillnav-label-main,
+.super-navbar.super-pillnav-safe .super-pillnav-link:focus-visible .super-pillnav-label-main {
+  transform: translateY(-130%) !important;
+  opacity: 0 !important;
+}
+
+.super-navbar.super-pillnav-safe .super-pillnav-link:hover .super-pillnav-label-hover,
+.super-navbar.super-pillnav-safe .super-pillnav-link:focus-visible .super-pillnav-label-hover {
+  transform: translateY(0) !important;
+  opacity: 1 !important;
+}
+
+/* Active page style */
+.super-navbar.super-pillnav-safe .super-pillnav-link.super-pillnav-active {
+  background: #d8d8d8 !important;
+  color: #000000 !important;
+}
+
+/* Small active dot from the original ReactBits concept */
+.super-navbar.super-pillnav-safe .super-pillnav-link.super-pillnav-active::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 50% !important;
+  bottom: -6px !important;
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 999px !important;
+  background: #000000 !important;
+  transform: translateX(-50%) !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+}
+
+/* Mobile safety */
+@media (max-width: 768px) {
+  .super-navbar.super-pillnav-safe .super-pillnav-link {
+    min-height: unset !important;
+    padding: inherit !important;
+    background: transparent !important;
+    color: inherit !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+  }
+
+  .super-navbar.super-pillnav-safe .super-pillnav-link::before,
+  .super-navbar.super-pillnav-safe .super-pillnav-link::after,
+  .super-navbar.super-pillnav-safe .super-pillnav-label-hover {
+    display: none !important;
+  }
+
+  .super-navbar.super-pillnav-safe .super-pillnav-label-stack {
+    overflow: visible !important;
+  }
+
+  .super-navbar.super-pillnav-safe .super-pillnav-label-main {
+    color: inherit !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Keep the navbar menu pills vertically centered like Super's native CTA button */
+.super-navbar.super-pillnav-safe .super-navbar__content {
+  align-items: center !important;
+}
+
+.super-navbar.super-pillnav-safe .super-navbar__item-list {
+  position: static !important;
+  top: auto !important;
+  transform: none !important;
+  align-self: center !important;
+  display: flex !important;
+  align-items: center !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* Anti-flash fallback for Super route changes */
+.super-navbar.super-pillnav-safe .super-navbar__item-list > li > a.super-navbar__item,
+.super-navbar.super-pillnav-safe .super-navbar__item-list > li > button.super-navbar__item {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 42px !important;
+  padding: 0 22px !important;
+  border-radius: 999px !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  overflow: hidden !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  isolation: isolate !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
