@@ -1,4 +1,5 @@
 (function () {
+  document.documentElement.classList.add("custom-password-message-loading");
   var config = window.SuperPasswordPageConfig || {};
 
   var defaultMessage = config.defaultMessage || "This page is password protected.";
