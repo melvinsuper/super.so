@@ -1388,3 +1388,23 @@ html.theme-dark .notion-root .notion-form__wrapper input::placeholder, html.them
 .notion-root .notion-column-list.super-tools-marquee-track {
   opacity: 1;
 }
+
+/* Reduce gap between the Tally mailing list section and footer */
+.notion-root .notion-callout.bg-red-light.border:has(iframe[src*="tally.so"]) {
+  margin-bottom: 16px !important;
+  padding-bottom: 16px !important;
+}
+
+/* Reduce the extra empty space inside the Tally embed */
+.notion-root .notion-callout.bg-red-light.border:has(iframe[src*="tally.so"]) .notion-embed__container,
+.notion-root .notion-callout.bg-red-light.border:has(iframe[src*="tally.so"]) .notion-embed__container__wrapper,
+.notion-root .notion-callout.bg-red-light.border:has(iframe[src*="tally.so"]) iframe {
+  height: 300px !important;
+  min-height: 300px !important;
+}
+
+/* Keep the footer closer to the section */
+.super-footer {
+  margin-top: 0 !important;
+  padding-top: 24px !important;
+}
