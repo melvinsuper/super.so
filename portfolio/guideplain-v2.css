@@ -1403,3 +1403,8 @@ html.theme-dark .notion-root .notion-form__wrapper input::placeholder, html.them
   margin-top: 0 !important;
   padding-top: 24px !important;
 }
+
+.notion-form__field-title {
+  font-size: 17px !important;
+  font-weight: 500;
+}
