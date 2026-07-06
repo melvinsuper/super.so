@@ -7,6 +7,7 @@
   --sidebar-icon-bg: #1ca0f1; /* Default icon background */
   --sidebar-icon-hover-bg: #0b84d8; /* Hover icon background */
   --sidebar-icon-active-bg: #0a6fb8; /* Active icon background */
+   --sidebar-icon-color: #ffffff;
 
   --mobile-sidebar-icon-bg: #1ca0f1; /* Mobile default icon background */
   --mobile-sidebar-icon-hover-bg: #0b84d8; /* Mobile hover icon background */
@@ -23,6 +24,7 @@ html.theme-dark .super-sidebar {
   --mobile-sidebar-icon-bg: #1ca0f1; /* Mobile default icon background */
   --mobile-sidebar-icon-hover-bg: #0b84d8; /* Mobile hover icon background */
   --mobile-sidebar-icon-active-bg: #0a6fb8; /* Mobile active icon background */
+   --sidebar-icon-color: #ffffff;
 }
 
 /********************************
